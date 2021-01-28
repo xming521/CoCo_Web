@@ -1,0 +1,334 @@
+<template>
+    <div id="app" class="wrap">
+
+        <el-row>
+            <el-col :span="12">
+                <div class="content">
+                    <div id="input" class="input">
+                        <div class="input_title">
+                            <input type="button" value="源代码">
+                            <el-button type="primary" id="run" @click="submit_code">运行</el-button>
+                        </div>
+                        <div class="input_area">
+                            <div class="codemirror" id="editor">
+                                <!-- codemirror -->
+                                <codemirror v-model="code" :options="cmOption" @input="onCmCodeChange"></codemirror>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="output" class="input">
+                        <div class="input_title">
+                            <input type="button" value="运行结果">
+                        </div>
+                        <div class="out_area" id="result">{{response_info}}</div>
+                    </div>
+                </div>
+
+
+            </el-col>
+            <el-col :span="6">
+
+                <div id="codeinfo">
+                    <el-form ref="form" :model="form" label-width="100px">
+                        <el-form-item label="模型名称">
+                            <el-input v-model="form.name"></el-input>
+                        </el-form-item>
+
+                        <el-form-item label="模型版本">
+                            <el-input v-model="form.version" disabled="true"></el-input>
+                        </el-form-item>
+
+                        <el-form-item label="运行环境">
+                            <el-select v-model="envi_value" placeholder="请选择">
+                                <el-option
+                                    v-for="item in envi_options"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value"
+                                    :disabled="item.disabled">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+
+
+                        <el-form-item label="数据存储桶">
+                            <el-select placeholder="demo">
+                                    <el-option
+                                    value="demo"
+                                    >
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+
+
+                        <el-form-item label="启用GPU">
+                            <el-switch v-model="form.delivery"></el-switch>
+                        </el-form-item>
+
+                        <!--                        <el-form-item>-->
+                        <!--                            <el-button type="primary" @click="onSubmit">立即创建</el-button>-->
+                        <!--                            <el-button>取消</el-button>-->
+                        <!--                        </el-form-item>-->
+                    </el-form>
+                </div>
+
+            </el-col>
+        </el-row>
+
+
+    </div>
+
+
+</template>
+
+
+<script>
+    import {codemirror} from 'vue-codemirror'
+    // require styles
+    import 'codemirror/lib/codemirror.css'
+    // language
+    import 'codemirror/mode/python/python.js'
+    // theme css
+    import 'codemirror/theme/base16-light.css'
+    import 'codemirror/addon/hint/show-hint.css'
+    // require active-line.js
+    import 'codemirror/addon/selection/active-line.js'
+    import 'codemirror/addon/edit/closebrackets.js'
+    // keyMap
+    import 'codemirror/mode/clike/clike.js'
+    import 'codemirror/addon/edit/matchbrackets.js'
+    import 'codemirror/addon/comment/comment.js'
+    import 'codemirror/addon/dialog/dialog.js'
+    import 'codemirror/addon/dialog/dialog.css'
+    import 'codemirror/addon/search/searchcursor.js'
+    import 'codemirror/addon/search/search.js'
+    import 'codemirror/addon/hint/show-hint.js'
+    import 'codemirror/addon/hint/anyword-hint.js'
+    import 'codemirror/addon/lint/lint.js'
+    //socket
+    import io from 'socket.io-client/dist/socket.io.js'
+    var socket = io.connect('http://47.94.199.65:5001');
+    const xcode = 'import tensorflow as tf\n' +
+        'import os\n' +
+        'os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"\n' +
+        'mnist = tf.keras.datasets.mnist\n' +
+        '\n' +
+        '(x_train, y_train),(x_test, y_test) = mnist.load_data()\n' +
+        'x_train, x_test = x_train / 255.0, x_test / 255.0\n' +
+        '\n' +
+        'model = tf.keras.models.Sequential([\n' +
+        '  tf.keras.layers.Flatten(input_shape=(28, 28)),\n' +
+        '  tf.keras.layers.Dense(512, activation=tf.nn.relu),\n' +
+        '  tf.keras.layers.Dropout(0.2),\n' +
+        '  tf.keras.layers.Dense(10, activation=tf.nn.softmax)\n' +
+        '])\n' +
+        'model.compile(optimizer=\'adam\',\n' +
+        '              loss=\'sparse_categorical_crossentropy\',\n' +
+        '              metrics=[\'accuracy\'])\n' +
+        '\n' +
+        'model.fit(x_train, y_train, epochs=2)\n' +
+        'model.evaluate(x_test, y_test)'
+    export default {
+        name: "editor",
+        components: {codemirror},
+        props: {},
+        data() {
+            const code = xcode
+            return {
+                code,
+                response_info: '',
+                envi_value: '',
+                form: {
+                    name: 'demo_model',
+                    region: '',
+                    date1: '',
+                    date2: '',
+                    delivery: false,
+                    type: [],
+                    resource: '',
+                    desc: '',
+                    version:'demo'
+                },
+                envi_options: [{
+                    value: 'TensorFlow',
+                    label: 'TensorFlow'
+                }, {
+                    value: 'pytorch',
+                    label: 'pytorch',
+                    disabled: true
+                }, {
+                    value: 'caffe',
+                    label: 'caffe',
+                    disabled: true
+                }],
+                cmOption: {
+                    autoCloseBrackets: true,
+                    tabSize: 4,
+                    styleActiveLine: true,
+                    lineNumbers: true,
+                    line: true,
+                    mode: 'text/x-python',
+                    theme: 'base16-light',
+                    matchBrackets: true,   // 括号匹配
+                    lineWrapping: true,   // 自动换行
+                    lint: true,
+                    hint: true  //代码提示
+                }
+            }
+        },
+        created: function () {
+            socket.on('connect', (msg) => {
+            });
+            // 监听事件 server服务端需写server_response  不是内置的
+            socket.on('print_log', (msg) => {
+                var objDiv = document.getElementById("result");
+                objDiv.scrollTop = 88888888;
+                console.log(msg.data);
+                // document.getElementById('result').scrollIntoView();
+                this.response_info = this.response_info + msg.data;
+                objDiv.scrollTop = 88888888;
+                // objDiv.scrollTop = objDiv.scrollHeight;
+            });
+        },
+        methods: {
+            onCmCodeChange(newCode) {
+                this.code = newCode
+            },
+            submit_code: function () {
+                this.response_info=''
+                socket.emit('run', {data: 1});
+                this.$http
+                    .post('http://47.94.199.65:5001/submit', {
+                        code: this.code
+                    })
+                    .then(response => {
+                        if (response.data != '1') {
+                            this.response_info = response.data
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error)
+                        this.errored = true
+                    })
+                    .finally(() => this.loading = false)
+            }
+        },
+        updated() {
+            var objDiv = document.getElementById("result");
+            objDiv.scrollTop = 88888888;
+        }
+    }
+</script>
+
+<style scoped>
+    #editor {
+        font-size: 18px;
+    }
+    * {
+        margin: 0;
+        padding: 0
+    }
+    .wrap {
+        width: 100%;
+        height: 100%;
+    }
+    .header {
+        width: 100%;
+        height: 60px;
+        background: #ef993e;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+    }
+    .content {
+        margin-left: 50px;
+        justify-content: space-around;
+        border-radius: 8px;
+    }
+    .input {
+        width: 650px;
+        box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        padding-bottom: 10px;
+    }
+    .input_title {
+        height: 60px;
+        /*background-color: #f5f5f5;*/
+        /*border-bottom: 1px solid #ddd;*/
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 20px;
+        box-sizing: border-box;
+    }
+    input[type='button'], [type='submit'] {
+        border: 1px solid #ddd;
+        outline: none;
+        width: 85px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        color: #333333;
+        border-radius: 5px;
+        background: #fff;
+    }
+    .input_area {
+        width: 650px;
+        height: 300px;
+        box-sizing: border-box;
+    }
+    iframe {
+        width: 650px;
+        height: calc(500px - 60px);
+        border: none;
+        outline: none;
+    }
+    #output {
+        margin-top: 20px;
+        width: 1190px;
+        height: 260px;
+        border-radius: 8px;
+    }
+    .out_area {
+        /*margin-top: -20px;*/
+        padding: 0 0 10px 10px;
+        white-space: pre-line;
+        overflow-y: scroll;
+        display: block;
+        width: 99.5%;
+        height: 190px;
+    }
+    #codeinfo {
+        height: 312px;
+        padding: 30px;
+        width: 400px;
+        margin-left: 130px;
+        box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+    }
+    .cm-s-base16-light.CodeMirror {
+        background: white !important;
+    }
+    #run {
+        z-index: 999;
+    }
+    ::-webkit-scrollbar-track-piece {
+        background-color: #ffffff;
+        /*滚动条凹槽的颜色，还可以设置边框属性*/
+    }
+    ::-webkit-scrollbar {
+        width: 6px;
+        /*滚动条的宽度*/
+    }
+    ::-webkit-scrollbar-thumb {
+        background-color: #dddddd;
+        /*滚动条的设置*/
+        background-clip: padding-box;
+        min-height: 28px;
+        border-radius: 50px;
+    }
+</style>
