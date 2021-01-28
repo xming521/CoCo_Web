@@ -32,7 +32,7 @@
             setTimeout(function () {
                 const resizeEvent = new Event('resize')
                 window.dispatchEvent(resizeEvent)
-            }, 100)
+            }, 105)
         },
         destroyed() {
             window.onresize = null
