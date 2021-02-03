@@ -44,12 +44,18 @@
           <span>{{ scope.row.start_time }}</span>
         </template>
       </el-table-column>
+            <el-table-column align="center" prop="created_at" label="结束时间" width="200">
+        <template slot-scope="scope">
+          <i class="el-icon-time" />
+          <span>{{ scope.row.start_time }}</span>
+        </template>
+      </el-table-column>
     </el-table>
   </div>
 </template>
 
 <script>
-import { getList } from '@/api/table'
+import { getList } from '@/api/application'
 
 export default {
   filters: {

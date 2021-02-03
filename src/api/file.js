@@ -7,13 +7,18 @@ const fileApi = {
     params
   }),
   createFolder: data => request({
-    url: `system/file/folder`,
+    url: '/create_dir',
+    method: 'post',
+    data: data
+  }),
+  deleteResource: data => request({
+    url: '/delete_file',
     method: 'post',
     data
   }),
-  deleteResource: data => request({
-    url: `system/file`,
-    method: 'delete',
+  downloadResource: data => request({
+    url: '/download_file',
+    method: 'post',
     data
   })
 }

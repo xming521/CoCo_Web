@@ -65,8 +65,8 @@
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                         fileApi.createFolder({
-                            prefix: this.parentPath,
-                            folderName: this.tempData.folderName
+                            path: this.parentPath,
+                            dir_name: this.tempData.folderName
                         }).then(res=>{
                             this.$message.success('创建成功')
                             this.close()

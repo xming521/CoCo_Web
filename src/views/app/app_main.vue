@@ -50,21 +50,75 @@
               <el-input v-model="form.run_command"/>
             </el-form-item>
             <el-form-item label="运行超时(s)">
-              <el-input v-model="form.timeout" />
-            </el-form-item>
-            <el-form-item label="模型版本">
-              <el-input v-model="form.version" :disabled="true"/>
+              <el-input v-model="form.timeout"/>
             </el-form-item>
 
+            <el-row>
+              <el-col :span="14">
+                <el-form-item label="访问外网能力">
+                  <el-switch v-model="form.use_network"/>
+                </el-form-item>
+              </el-col>
+              <el-col :span="10">
+                <el-popover
+                  placement="right"
+                  width="400"
+                  trigger="click"
+                >
+                  <el-radio-group v-model="form.network">
+                    <el-radio-button label="bridge"></el-radio-button>
+                    <el-radio-button label="host"></el-radio-button>
+                    <el-radio-button label="none"></el-radio-button>
+                  </el-radio-group>
+                  <el-button slot="reference">配置网络</el-button>
+                </el-popover>
+              </el-col>
+            </el-row>
 
-            <el-form-item label="启用GPU">
-              <el-switch v-model="form.delivery"/>
-            </el-form-item>
+            <el-row>
+              <el-col :span="14">
+                <el-form-item label="自定义应用性能">
+                  <el-switch v-model="form.use_network"/>
+                </el-form-item>
+              </el-col>
+              <el-col :span="10">
+                <el-popover
+                  placement="left"
+                  width="800"
+                  trigger="click"
+                >
+                  <div class="popover">
+                    <el-form-item label="CPU数量">
+                      <el-input-number v-model="form.cpu_count" controls-position="right" :min="1" :max="10"
+                      ></el-input-number>
+                    </el-form-item>
+                    <el-form-item label="cpu百分比">
+                      <el-slider
+                        v-model="form.cpu_percent"
+                        :step="25"
+                        :marks="marks"
+                        show-stops
+                      >
+                      </el-slider>
+                    </el-form-item>
 
-            <!--                        <el-form-item>-->
-            <!--                            <el-button type="primary" @click="onSubmit">立即创建</el-button>-->
-            <!--                            <el-button>取消</el-button>-->
-            <!--                        </el-form-item>-->
+                    <el-form-item label="内存占用">
+                      <el-radio-group v-model="form.mem_limit">
+                        <el-radio-button label="128m"></el-radio-button>
+                        <el-radio-button label="256m"></el-radio-button>
+                        <el-radio-button label="512m"></el-radio-button>
+                        <el-radio-button label="1g"></el-radio-button>
+                        <el-radio-button label="2g"></el-radio-button>
+
+                      </el-radio-group>
+                    </el-form-item>
+
+                  </div>
+                  <el-button slot="reference">配置性能</el-button>
+
+                </el-popover>
+              </el-col>
+            </el-row>
           </el-form>
         </div>
 
@@ -99,12 +153,12 @@ import 'codemirror/addon/hint/show-hint.js'
 import 'codemirror/addon/hint/anyword-hint.js'
 import 'codemirror/addon/lint/lint.js'
 // socket
-import { easy_submit } from '@/api/easy'
+import { app_submit } from '@/api/application'
 import { notice } from '@/utils/notice'
 
 const setting = require('@/settings')
 export default {
-  name: 'EasyApp',
+  name: 'app_main',
   components: { codemirror },
   props: {},
   data() {
@@ -119,10 +173,19 @@ export default {
         run_command: 'python /mnt/easy_app/main.py',
         run_type: 'first',
         app_type: 'easy',
-        delivery: false,
         timeout: 10,
-        desc: '',
-        version: 'demo'
+        use_network: false,
+        network: 'none',
+        cpu_count: 1,
+        cpu_percent: 100,
+        mem_limit: ''
+      },
+      marks: {
+        0: '0%',
+        25: '25%',
+        50: '50%',
+        75: '75%',
+        100: '100%'
       },
       envi_options: [{
         value: 'tensorflow-flask',
@@ -180,14 +243,15 @@ export default {
     submit_code: function() {
       this.response_info = ''
 
-      easy_submit({
+      app_submit({
         code: this.code,
         app_name: this.form.app_name,
         image_name: this.form.image_name,
         run_command: this.form.run_command,
         run_type: this.form.run_type,
         app_type: this.form.app_type,
-        timeout: this.form.timeout
+        timeout: this.form.timeout,
+        network: this.form.network
       }).then(response => {
         if (response.data.status == 1) {
           // notice(this, '成功', '运行成功', 'success')
@@ -319,5 +383,9 @@ iframe {
   background-clip: padding-box;
   min-height: 28px;
   border-radius: 50px;
+}
+
+.popover {
+  margin: 35px;
 }
 </style>

@@ -57,26 +57,26 @@ export const constantRoutes = [
   {
     path: '/app',
     component: Layout,
-    redirect: '/app',
+    redirect: '/app/table1',
     name: 'app',
     meta: { title: '应用', icon: 'el-icon-s-help' },
     children: [
       {
         path: 'easy',
         name: 'easy',
-        component: () => import('@/views/app/easy_app'),
+        component: () => import('@/views/app/app_main'),
         meta: { title: '创建简单应用', icon: 'dashboard' }
       },
       {
         path: 'table1',
         name: 'Table1',
-        component: () => import('@/views/table/app_table'),
+        component: () => import('@/views/app/app_table'),
         meta: { title: '应用列表', icon: 'table' }
       },
       {
         path: 'table2',
         name: 'Table2',
-        component: () => import('@/views/table/container_table'),
+        component: () => import('@/views/app/container_table'),
         meta: { title: '容器列表', icon: 'table' }
       },
       {
@@ -100,15 +100,27 @@ export const constantRoutes = [
       }
     ]
   },
-    {
-    path: '/form',
+  {
+    path: '/file',
     component: Layout,
     children: [
       {
         path: 'file',
         name: 'Form',
         component: () => import('@/views/file/index'),
-        meta: { title: '文件和数据管理', icon: 'file' }
+        meta: { title: '文件和数据管理', icon: 'folder' }
+      }
+    ]
+  },
+  {
+    path: '/scheduler',
+    component: Layout,
+    children: [
+      {
+        path: 'scheduler',
+        name: 'scheduler',
+        component: () => import('@/views/scheduler/index'),
+        meta: { title: '计划任务', icon: 'file' }
       }
     ]
   },
