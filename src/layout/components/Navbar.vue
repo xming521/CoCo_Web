@@ -3,6 +3,7 @@
     <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
 
     <breadcrumb class="breadcrumb-container" />
+    <div class="current-name"> {{this.$route.query.app_name}}</div>
 
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
@@ -60,6 +61,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.current-name{
+  line-height: 50px;
+  margin-left: 300px;
+}
 .navbar {
   height: 50px;
   overflow: hidden;

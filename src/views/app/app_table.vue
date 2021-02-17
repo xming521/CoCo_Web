@@ -13,14 +13,11 @@
           {{ scope.$index }}
         </template>
       </el-table-column>
-      <!--      <el-table-column align="center" label="容器ID" width="150">-->
-      <!--        <template slot-scope="scope">-->
-      <!--          {{ scope.row.container_id }}-->
-      <!--        </template>-->
-      <!--      </el-table-column>-->
       <el-table-column align="center" label="App名称" width="200">
         <template slot-scope="scope">
-          <el-link type="primary">{{ scope.row.app_name }}</el-link>
+          <router-link :to="{name: 'app_modify', query: {app_name:scope.row.app_name, run_type: 'modified' }}">
+            <el-link type="primary">{{ scope.row.app_name }}</el-link>
+          </router-link>
         </template>
       </el-table-column>
       <el-table-column label="镜像" width="200" align="center">
@@ -71,10 +68,13 @@
             size="mini"
             type="danger"
             @click="handleDelete(scope.$index, scope.row)"
-            v-bind:disabled="scope.row.status == 'stopped' ? true : false"
+            v-bind:disabled="['stopped','success','error'].includes(scope.row.status)"
           >停止
           </el-button
           >
+          <router-link :to="{name: 'container_table', query: {app_name:scope.row.app_name }}">
+            <el-link type="primary">运行记录</el-link>
+          </router-link>
         </template>
       </el-table-column>
     </el-table>
@@ -89,7 +89,9 @@ export default {
     statusFilter(status) {
       const statusMap = {
         running: 'success',
-        stopped: 'info'
+        stopped: 'info',
+        success: 'success',
+        error:'danger'
       }
       return statusMap[status]
     },

@@ -5,33 +5,37 @@
         <div class="content">
           <div id="input" class="input">
             <div class="input_title">
-              <input type="button" value="源代码">
-
-              <el-button id="run" type="primary" @click="submit_code">运行</el-button>
+              <input type="button" value="源代码"/>
+              <el-button id="run" type="primary" @click="submit_code"
+              >运行
+              </el-button
+              >
             </div>
             <div class="input_area">
               <div id="editor" class="codemirror">
                 <!-- codemirror -->
-                <codemirror v-model="code" :options="cmOption" @input="onCmCodeChange"/>
+                <codemirror
+                  v-model="code"
+                  :options="cmOption"
+                  @input="onCmCodeChange"
+                />
               </div>
             </div>
           </div>
 
           <div id="output" class="input">
             <div class="input_title">
-              <input type="button" value="运行结果">
+              <input type="button" value="运行结果"/>
             </div>
             <div id="result" class="out_area">{{ response_info }}</div>
           </div>
         </div>
-
       </el-col>
       <el-col :span="6">
-
         <div id="codeinfo">
           <el-form ref="form" :model="form" label-width="100px">
             <el-form-item label="应用名称">
-              <el-input v-model="form.app_name"/>
+              <el-input v-model="form.app_name" v-bind:disabled="disable_appname"/>
             </el-form-item>
 
             <el-form-item label="运行镜像">
@@ -60,11 +64,7 @@
                 </el-form-item>
               </el-col>
               <el-col :span="10">
-                <el-popover
-                  placement="right"
-                  width="400"
-                  trigger="click"
-                >
+                <el-popover placement="right" width="400" trigger="click">
                   <el-radio-group v-model="form.network">
                     <el-radio-button label="bridge"></el-radio-button>
                     <el-radio-button label="host"></el-radio-button>
@@ -82,14 +82,14 @@
                 </el-form-item>
               </el-col>
               <el-col :span="10">
-                <el-popover
-                  placement="left"
-                  width="800"
-                  trigger="click"
-                >
+                <el-popover placement="left" width="800" trigger="click">
                   <div class="popover">
                     <el-form-item label="CPU数量">
-                      <el-input-number v-model="form.cpu_count" controls-position="right" :min="1" :max="10"
+                      <el-input-number
+                        v-model="form.cpu_count"
+                        controls-position="right"
+                        :min="1"
+                        :max="10"
                       ></el-input-number>
                     </el-form-item>
                     <el-form-item label="cpu百分比">
@@ -109,24 +109,18 @@
                         <el-radio-button label="512m"></el-radio-button>
                         <el-radio-button label="1g"></el-radio-button>
                         <el-radio-button label="2g"></el-radio-button>
-
                       </el-radio-group>
                     </el-form-item>
-
                   </div>
                   <el-button slot="reference">配置性能</el-button>
-
                 </el-popover>
               </el-col>
             </el-row>
           </el-form>
         </div>
-
       </el-col>
     </el-row>
-
   </div>
-
 </template>
 
 <script>
@@ -153,7 +147,7 @@ import 'codemirror/addon/hint/show-hint.js'
 import 'codemirror/addon/hint/anyword-hint.js'
 import 'codemirror/addon/lint/lint.js'
 // socket
-import { app_submit } from '@/api/application'
+import { app_submit, getApp_info } from '@/api/application'
 import { notice } from '@/utils/notice'
 
 const setting = require('@/settings')
@@ -167,13 +161,14 @@ export default {
       code,
       response_info: '',
       envi_value: '',
+      disable_appname: false,
       form: {
-        app_name: 'demo_model',
-        image_name: 'tensorflow-flask',
-        run_command: 'python /mnt/easy_app/main.py',
+        app_name: '',
+        image_name: '',
+        run_command: '',
         run_type: 'first',
-        app_type: 'easy',
-        timeout: 10,
+        app_type: '',
+        timeout: '',
         use_network: false,
         network: 'none',
         cpu_count: 1,
@@ -187,14 +182,17 @@ export default {
         75: '75%',
         100: '100%'
       },
-      envi_options: [{
-        value: 'tensorflow-flask',
-        label: 'tensorflow-flask'
-      }, {
-        value: 'pytorch',
-        label: 'pytorch',
-        disabled: true
-      }],
+      envi_options: [
+        {
+          value: 'tensorflow-flask',
+          label: 'tensorflow-flask'
+        },
+        {
+          value: 'pytorch',
+          label: 'pytorch',
+          disabled: true
+        }
+      ],
       cmOption: {
         autoCloseBrackets: true,
         tabSize: 4,
@@ -211,18 +209,19 @@ export default {
     }
   },
   created: function() {
-
-    // 监听事件 server服务端需写server_response  不是内置的
+    //todo 判断url 是否调用appinfo
+    if (this.$route.query.run_type == 'modified') {
+      this.info_init(this.$route.query.app_name)
+    }
     this.socketIO.on('print_log', (msg) => {
       var objDiv = document.getElementById('result')
       objDiv.scrollTop = 88888888
-      console.log(msg.data)
+      console.log('msg', msg)
       // document.getElementById('result').scrollIntoView();
       this.response_info = this.response_info + msg.data
       objDiv.scrollTop = 88888888
       // objDiv.scrollTop = objDiv.scrollHeight;
     })
-
   },
   updated() {
     var objDiv = document.getElementById('result')
@@ -234,9 +233,15 @@ export default {
     //     notice(this, '成功', '服务器连接成功', 'success')
     //   }
     // }, 500) //todo 可以改用watch
-
   },
   methods: {
+    info_init(app_name) {
+      getApp_info({ app_name: app_name }).then((response) => {
+        this.disable_appname=true
+        this.form = response.data.res
+        this.code = response.data.res.code
+      })
+    },
     onCmCodeChange(newCode) {
       this.code = newCode
     },
@@ -252,16 +257,17 @@ export default {
         app_type: this.form.app_type,
         timeout: this.form.timeout,
         network: this.form.network
-      }).then(response => {
-        if (response.data.status == 1) {
-          // notice(this, '成功', '运行成功', 'success')
-        }
       })
-        .catch(error => {
+        .then((response) => {
+          if (response.data.status == 1) {
+            // notice(this, '成功', '运行成功', 'success')
+          }
+        })
+        .catch((error) => {
           console.log(error)
           this.errored = true
         })
-        .finally(e => this.loading = false)
+        .finally((e) => (this.loading = false))
     }
   }
 }
@@ -306,7 +312,8 @@ export default {
   box-sizing: border-box;
 }
 
-input[type='button'], [type='submit'] {
+input[type="button"],
+[type="submit"] {
   border: 1px solid #ddd;
   outline: none;
   width: 85px;

@@ -29,5 +29,6 @@ new Vue({
   el: '#app',
   router,
   store,
+  cur_name: '233',
   render: h => h(App)
 })

@@ -31,3 +31,27 @@ export function getApp_stop(params) {
     params
   })
 }
+
+export function getContainerr_list(params) {
+  return request({
+    url: '/container_list',
+    method: 'get',
+    params
+  })
+}
+
+export function getApp_info(params) {
+  return request({
+    url: '/app_getinfo',
+    method: 'get',
+    params
+  })
+}
+
+export function getApp_log(params) {
+  return request({
+    url: '/app_getlog',
+    method: 'get',
+    params
+  })
+}

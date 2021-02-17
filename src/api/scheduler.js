@@ -15,3 +15,19 @@ export function getList(params) {
     params
   })
 }
+
+export function getName(params) {
+  return request({
+    url: '/app_getname',
+    method: 'get',
+    params
+  })
+}
+
+export function delete_jobs(params) {
+  return request({
+    url: '/scheduler/delete_jobs',
+    method: 'get',
+    params
+  })
+}

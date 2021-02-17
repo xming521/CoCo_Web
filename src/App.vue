@@ -14,7 +14,6 @@ let socket = io(process.env.VUE_APP_BASE_API, {
   path: '/ws/socket.io'
 })
 Vue.prototype.socketIO = socket
-
 export default {
   name: 'App',
   mounted() {

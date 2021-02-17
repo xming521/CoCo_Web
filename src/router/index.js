@@ -57,25 +57,33 @@ export const constantRoutes = [
   {
     path: '/app',
     component: Layout,
-    redirect: '/app/table1',
+    redirect: '/app/app_table',
     name: 'app',
     meta: { title: '应用', icon: 'el-icon-s-help' },
     children: [
       {
-        path: 'easy',
-        name: 'easy',
+        path: 'app_main',
+        name: 'app_main',
         component: () => import('@/views/app/app_main'),
-        meta: { title: '创建简单应用', icon: 'dashboard' }
+        meta: { title: '创建应用', icon: 'dashboard' }
       },
       {
-        path: 'table1',
-        name: 'Table1',
+        path: 'app_main',
+        name: 'app_modify',
+        hidden:true,
+        component: () => import('@/views/app/app_main'),
+        meta: { title: '编辑应用', icon: 'dashboard' }
+      },
+      {
+        path: 'app_table',
+        name: 'app_table',
         component: () => import('@/views/app/app_table'),
         meta: { title: '应用列表', icon: 'table' }
       },
       {
-        path: 'table2',
-        name: 'Table2',
+        path: 'container_table',
+        name: 'container_table',
+        hidden: true,
         component: () => import('@/views/app/container_table'),
         meta: { title: '容器列表', icon: 'table' }
       },
@@ -89,15 +97,22 @@ export const constantRoutes = [
   },
 
   {
-    path: '/form',
+    path: '/image',
     component: Layout,
+    meta: { title: '镜像', icon: 'el-icon-s-help' },
     children: [
       {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
-      }
+        path: 'image/create',
+        name: 'image',
+        component: () => import('@/views/image/index'),
+        meta: { title: '推荐镜像', icon: 'form' }
+      },
+       {
+        path: 'image/table',
+        name: 'image/table',
+        component: () => import('@/views/image/table'),
+        meta: { title: '镜像管理', icon: 'form' }
+      },
     ]
   },
   {
