@@ -112,7 +112,7 @@
       <el-col :span="9">
         <el-card class="box-card-all">
           <h2>最近任务</h2>
-          <transaction-table style="margin-top: -3vh" :recent_event="recent"/>
+          <transaction-table style="margin-top: -2vh" :recent_event="recent"/>
         </el-card>
       </el-col>
       <el-col :span="7">
@@ -174,13 +174,15 @@ export default {
 
 <style lang="scss" scoped>
 .card-link {
-  font-size: 5rem;
+  font-size: 11vh;
   color: #f1f1f1;
+  margin-bottom: 2vh;
 }
 
 .dashboard-container h1 {
   margin-top: -0.1vh;
-  font-size: 1.7rem;
+  font-size: 1.8rem;
+  margin-bottom: 3vh;
 }
 
 .box-card {

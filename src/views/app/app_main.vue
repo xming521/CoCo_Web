@@ -1,9 +1,9 @@
 <template>
   <div id="app" class="wrap">
-    <el-row>
-      <el-col :span="12">
+    <el-row >
+      <el-col :span="14" >
         <div class="content">
-          <div id="input" class="input">
+          <div id="input" class="input-card">
             <div class="input_title">
               <input type="button" value="源代码"/>
               <el-button id="run" type="primary" @click="submit_code"
@@ -23,17 +23,11 @@
             </div>
           </div>
 
-          <div id="output" class="input">
-            <div class="input_title">
-              <input type="button" value="运行结果"/>
-            </div>
-            <div id="result" class="out_area">{{ response_info }}</div>
-          </div>
         </div>
       </el-col>
-      <el-col :span="6">
-        <div id="codeinfo">
-          <el-form ref="form" :model="form" label-width="100px">
+      <el-col :span="10">
+        <div class="input-card" id="app-info">
+          <el-form ref="form" :model="form" label-width="8vw" label-position="left">
             <el-form-item label="应用名称">
               <el-input v-model="form.app_name" v-bind:disabled="disable_appname"/>
             </el-form-item>
@@ -120,6 +114,14 @@
         </div>
       </el-col>
     </el-row>
+    <el-row>
+      <div id="output" class="input-card">
+        <div class="input_title">
+          <input type="button" value="运行结果"/>
+        </div>
+        <div id="result" class="out_area">{{ response_info }}</div>
+      </div>
+    </el-row>
   </div>
 </template>
 
@@ -204,7 +206,7 @@ export default {
         matchBrackets: true, // 括号匹配
         lineWrapping: true, // 自动换行
         lint: true,
-        hint: true // 代码提示
+        hint: true ,// 代码提示
       }
     }
   },
@@ -237,8 +239,9 @@ export default {
   methods: {
     info_init(app_name) {
       getApp_info({ app_name: app_name }).then((response) => {
-        this.disable_appname=true
+        this.disable_appname = true
         this.form = response.data.res
+        this.form.run_type='modified'
         this.code = response.data.res.code
       })
     },
@@ -278,31 +281,15 @@ export default {
   font-size: 18px;
 }
 
-/** {*/
-/*  margin: 0;*/
-/*  padding: 0*/
-/*}*/
-
-.wrap {
-  width: 100%;
-  height: 100%;
-}
-
-.content {
-  margin-left: 50px;
-  justify-content: space-around;
-  border-radius: 8px;
-}
-
-.input {
-  width: 650px;
+.input-card {
+  height: 50vh;
+  margin: 5vh 5vw 0vh 5vw;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  padding-bottom: 10px;
 }
 
 .input_title {
-  height: 60px;
+  height: 7vh;
   /*background-color: #f5f5f5;*/
   /*border-bottom: 1px solid #ddd;*/
   display: flex;
@@ -328,51 +315,42 @@ input[type="button"],
 }
 
 .input_area {
-  width: 650px;
-  height: 300px;
+  /*width: 650px;*/
+  height: 43vh;
   box-sizing: border-box;
 }
 
-iframe {
-  width: 650px;
-  height: calc(500px - 60px);
-  border: none;
-  outline: none;
+::v-deep .CodeMirror-wrap{
+  height: 43vh!important;
 }
-
+::v-deep .el-form-item{
+  margin-bottom: 2.5vh;
+}
 #output {
-  margin-top: 20px;
-  width: 1190px;
-  height: 260px;
+  margin-top: 5vh;
+  height: 30vh;
   border-radius: 8px;
 }
 
 .out_area {
-  /*margin-top: -20px;*/
   padding: 0 0 10px 10px;
   white-space: pre-line;
   overflow-y: scroll;
   display: block;
   width: 99.5%;
-  height: 190px;
+  height: 23vh;
 }
 
-#codeinfo {
-  height: 312px;
-  padding: 30px;
-  width: 400px;
-  margin-left: 130px;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
+#app-info {
+  padding: 3vh 2vw 5vh 2vw;
+  margin-left: 5vw;
+  margin-right: 5vw;
 }
 
 .cm-s-base16-light.CodeMirror {
   background: white !important;
 }
 
-#run {
-  z-index: 999;
-}
 
 ::-webkit-scrollbar-track-piece {
   background-color: #ffffff;

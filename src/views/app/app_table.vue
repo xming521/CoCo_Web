@@ -1,4 +1,4 @@
-<template>
+<template ref="app_table">
   <div class="app-container">
     <el-table
       v-loading="listLoading"
@@ -91,7 +91,7 @@ export default {
         running: 'success',
         stopped: 'info',
         success: 'success',
-        error:'danger'
+        error: 'danger'
       }
       return statusMap[status]
     },
@@ -114,6 +114,10 @@ export default {
   },
   created() {
     this.fetchData()
+    let that=this
+    this.$root.$on('refresh_apptable', function() {
+      that.fetchData()
+    })//监听外部刷新表格 socketio用 注意监听直接this 只能监听这个组件的emit 所以要挂root上
   },
   methods: {
     fetchData() {

@@ -1,4 +1,4 @@
-<template>
+<template ref="main">
   <section class="app-main">
     <transition name="fade-transform" mode="out-in">
       <router-view :key="key" />
