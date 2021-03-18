@@ -1,5 +1,5 @@
 module.exports = {
-  title: 'Vue Admin Template',
+  title: '计算资源管理平台',
   test_code: 'import time\n' +
     'for i in range(110):\n' +
     '    print(i)\n' +

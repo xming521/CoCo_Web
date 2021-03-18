@@ -36,13 +36,11 @@ export const constantRoutes = [
     component: () => import('@/views/login/index'),
     hidden: true
   },
-
   {
     path: '/404',
     component: () => import('@/views/404'),
     hidden: true
   },
-
   {
     path: '/',
     component: Layout,
@@ -68,7 +66,7 @@ export const constantRoutes = [
         meta: { title: '创建应用', icon: 'dashboard' }
       },
       {
-        path: 'app_main',
+        path: 'app_modify',
         name: 'app_modify',
         hidden:true,
         component: () => import('@/views/app/app_main'),
@@ -86,12 +84,22 @@ export const constantRoutes = [
         hidden: true,
         component: () => import('@/views/app/container_table'),
         meta: { title: '容器列表', icon: 'table' }
-      },
+      }
+    ]
+  },
+  {
+    path: '/permission',
+    component: Layout,
+    redirect: '/role',
+    children: [
       {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
+        path: 'role',
+        component: () => import('@/views/permission/role'),
+        name: 'RolePermission',
+        meta: {
+          title: '权限控制',
+          roles: ['admin']
+        }
       }
     ]
   },
@@ -139,7 +147,6 @@ export const constantRoutes = [
       }
     ]
   },
-
   {
     path: '/nested',
     component: Layout,
@@ -198,7 +205,6 @@ export const constantRoutes = [
       }
     ]
   },
-
   {
     path: 'external-link',
     component: Layout,
@@ -209,7 +215,6 @@ export const constantRoutes = [
       }
     ]
   },
-
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]

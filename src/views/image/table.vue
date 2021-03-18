@@ -23,36 +23,32 @@
       fit
       highlight-current-row
     >
-      <el-table-column align="center" label="ID" width="270">
+      <el-table-column align="center" label="ID" min-width="15%">
         <template slot-scope="scope">
           {{ scope.row.id }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="镜像名称" width="200">
+      <el-table-column align="center" label="镜像名称" min-width="20%">
         <template slot-scope="scope">
           <el-link type="primary">{{ scope.row.name }}</el-link>
         </template>
       </el-table-column>
-
-      <el-table-column label="标签" width="180" align="center">
+      <el-table-column label="标签" min-width="15%" align="center">
         <template slot-scope="scope">
           {{ scope.row.tag }}
         </template>
       </el-table-column>
-
-      <el-table-column label="创建时间" width="230" align="center">
+      <el-table-column label="创建时间" min-width="20%" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.create_time }}</span>
         </template>
       </el-table-column>
-
-      <el-table-column label="大小" width="130" align="center">
+      <el-table-column label="大小" min-width="10%" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.size }}</span>
         </template>
       </el-table-column>
-
-      <el-table-column align="center" label="操作">
+      <el-table-column align="center" min-width="20%" label="操作">
         <template slot-scope="scope">
 
           <el-button

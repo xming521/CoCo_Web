@@ -170,7 +170,6 @@ export default {
   margin: 5vh 0 0 2vw;
   box-shadow: 0 8px 35px rgba(149, 157, 165, 0.2);
   display: flex;
-
   align-items: center;
   justify-content: center;
   border-radius: 50%;
@@ -193,7 +192,7 @@ h1{
 }
 .box-card2 {
   height: 25vh;
-  margin: 5vh 5vw 5vh 5vw;
+  margin: 5vh 5vw 1vh 5vw;
   padding: 0 2vw 1vh 2vw;
   border-radius: 10px;
   /*font-size: 1.15rem;*/

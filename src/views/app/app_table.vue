@@ -1,4 +1,4 @@
-<template ref="app_table">
+<template>
   <div class="app-container">
     <el-table
       v-loading="listLoading"
@@ -8,32 +8,25 @@
       fit
       highlight-current-row
     >
-      <el-table-column align="center" label="ID" width="70">
+      <el-table-column align="center" label="ID" min-width="5%">
         <template slot-scope="scope">
           {{ scope.$index }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="App名称" width="200">
+      <el-table-column align="center" label="App名称" min-width="17%">
         <template slot-scope="scope">
           <router-link :to="{name: 'app_modify', query: {app_name:scope.row.app_name, run_type: 'modified' }}">
             <el-link type="primary">{{ scope.row.app_name }}</el-link>
           </router-link>
         </template>
       </el-table-column>
-      <el-table-column label="镜像" width="200" align="center">
+      <el-table-column label="镜像" min-width="17%" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.image_name }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="类型" width="180" align="center">
-        <template slot-scope="scope">
-          {{ scope.row.type }}
-        </template>
-      </el-table-column>
-      <el-table-column
+      <el-table-column min-width="13%" label="状态"
         class-name="status-col"
-        label="状态"
-        width="125"
         align="center"
       >
         <template slot-scope="scope">
@@ -43,18 +36,16 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column
+      <el-table-column min-width="18%" label="上次运行时间"
         align="center"
         prop="created_at"
-        label="上次运行时间"
-        width="200"
       >
         <template slot-scope="scope">
           <i class="el-icon-time"/>
           <span>{{ '   ' + scope.row.start_time }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="操作">
+      <el-table-column align="center" label="操作" min-width="30%">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -161,4 +152,7 @@ export default {
     width: 100% !important;
   }
 }
+
+
+
 </style>

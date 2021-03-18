@@ -8,56 +8,47 @@
       fit
       highlight-current-row
     >
-      <el-table-column align="center" label="ID" width="70">
+      <el-table-column align="center" label="ID" min-min-width="70">
         <template slot-scope="scope">
           {{ scope.row.container_id }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="" width="200">
+      <el-table-column align="center" label="应用名称" min-width="100">
         <template slot-scope="scope">
           {{ scope.row.app_name }}
         </template>
       </el-table-column>
-      <el-table-column label="镜像名称" width="200" align="center">
+      <el-table-column label="镜像名称" min-width="100" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.image_name }}</span>
         </template>
       </el-table-column>
-      <!--      <el-table-column label="运行指令" width="180" align="center">-->
-      <!--        <template slot-scope="scope">-->
-      <!--          {{ scope.row.run_command }}-->
-      <!--        </template>-->
-      <!--      </el-table-column>-->
-      <el-table-column
+      <el-table-column label="上次运行时间" min-width="150"
         align="center"
         prop="created_at"
-        label="上次运行时间"
-        width="200"
+
       >
         <template slot-scope="scope">
           <i class="el-icon-time"/>
           <span>{{ scope.row.start_time }}</span>
         </template>
       </el-table-column>
-      <el-table-column
+      <el-table-column label="结束时间" min-width="150"
         align="center"
         prop="created_at"
-        label="结束时间"
-        width="200"
+
       >
         <template slot-scope="scope">
           <i class="el-icon-time"/>
           <span>{{ scope.row.over_time }}</span>
         </template>
       </el-table-column>
-
-      <el-table-column align="center" label="状态" width="200">
+      <el-table-column align="center" label="状态" min-width="100">
         <template slot-scope="scope">
           {{ scope.row.status |statusFilter }}
         </template>
       </el-table-column>
-
-      <el-table-column align="center" label="日志">
+      <el-table-column align="center" label="日志"  min-width="100">
         <template slot-scope="scope">
           <el-button
             size="mini"

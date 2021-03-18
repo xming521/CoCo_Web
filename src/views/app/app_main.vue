@@ -1,15 +1,14 @@
 <template>
   <div id="app" class="wrap">
-    <el-row >
-      <el-col :span="14" >
+    <el-row>
+      <el-col :span="14">
         <div class="content">
           <div id="input" class="input-card">
             <div class="input_title">
-              <input type="button" value="源代码"/>
-              <el-button id="run" type="primary" @click="submit_code"
-              >运行
-              </el-button
-              >
+                <input type="button" value="源代码"/>
+<!--                <div id="app-entrance">应用入口:/{{form.app_name}}/main.py</div>-->
+
+              <el-button id="run" type="primary" @click="submit_code">运行</el-button>
             </div>
             <div class="input_area">
               <div id="editor" class="codemirror">
@@ -206,7 +205,7 @@ export default {
         matchBrackets: true, // 括号匹配
         lineWrapping: true, // 自动换行
         lint: true,
-        hint: true ,// 代码提示
+        hint: true// 代码提示
       }
     }
   },
@@ -241,7 +240,7 @@ export default {
       getApp_info({ app_name: app_name }).then((response) => {
         this.disable_appname = true
         this.form = response.data.res
-        this.form.run_type='modified'
+        this.form.run_type = 'modified'
         this.code = response.data.res.code
       })
     },
@@ -320,12 +319,14 @@ input[type="button"],
   box-sizing: border-box;
 }
 
-::v-deep .CodeMirror-wrap{
-  height: 43vh!important;
+::v-deep .CodeMirror-wrap {
+  height: 43vh !important;
 }
-::v-deep .el-form-item{
+
+::v-deep .el-form-item {
   margin-bottom: 2.5vh;
 }
+
 #output {
   margin-top: 5vh;
   height: 30vh;

@@ -55,30 +55,27 @@
       fit
       highlight-current-row
     >
-      <el-table-column align="center" label="ID" width="270">
+      <el-table-column align="center" label="ID" min-width="25%">
         <template slot-scope="scope">
           {{ scope.row.id }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="App名称" width="200">
+      <el-table-column align="center" label="App名称" min-width="15%">
         <template slot-scope="scope">
           <el-link type="primary">{{ scope.row.app_name }}</el-link>
         </template>
       </el-table-column>
-
-      <el-table-column label="下次运行时间" width="180" align="center">
+      <el-table-column label="下次运行时间" min-width="15%" align="center">
         <template slot-scope="scope">
           {{ scope.row.next_run_time }}
         </template>
       </el-table-column>
-
-      <el-table-column label="触发器" width="230" align="center">
+      <el-table-column label="触发器" min-width="20%" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.trigger }}</span>
         </template>
       </el-table-column>
-
-      <el-table-column align="center" label="操作">
+      <el-table-column align="center" min-width="25%" label="操作">
         <template slot-scope="scope">
           <el-button
             size="small"
@@ -104,7 +101,7 @@
           >
 
         </template>
-      </el-table-column>
+      </el-table-column >
     </el-table>
   </div>
 </template>

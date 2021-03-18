@@ -3,7 +3,7 @@
     <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
 
     <breadcrumb class="breadcrumb-container" />
-    <div class="current-name"> {{this.$route.query.app_name}}</div>
+    <div class="current-name" v-if="this.$route.query.app_name"> <el-tag type="info"  effect="dark">应用 {{this.$route.query.app_name}}</el-tag></div>
 
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
@@ -63,7 +63,7 @@ export default {
 <style lang="scss" scoped>
 .current-name{
   line-height: 50px;
-  margin-left: 300px;
+  margin-left: 250px;
 }
 .navbar {
   height: 50px;
