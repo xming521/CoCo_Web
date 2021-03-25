@@ -13,21 +13,21 @@
           {{ scope.$index }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="App名称" min-width="17%">
+      <el-table-column align="center" label="App名称" min-width="15%">
         <template slot-scope="scope">
           <router-link :to="{name: 'app_modify', query: {app_name:scope.row.app_name, run_type: 'modified' }}">
             <el-link type="primary">{{ scope.row.app_name }}</el-link>
           </router-link>
         </template>
       </el-table-column>
-      <el-table-column label="镜像" min-width="17%" align="center">
+      <el-table-column label="镜像" min-width="20%" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.image_name }}</span>
         </template>
       </el-table-column>
       <el-table-column min-width="13%" label="状态"
-        class-name="status-col"
-        align="center"
+                       class-name="status-col"
+                       align="center"
       >
         <template slot-scope="scope">
           <el-tag class="status-tags" :type="scope.row.status | statusFilter" effect="dark">
@@ -37,15 +37,15 @@
         </template>
       </el-table-column>
       <el-table-column min-width="18%" label="上次运行时间"
-        align="center"
-        prop="created_at"
+                       align="center"
+                       prop="created_at"
       >
         <template slot-scope="scope">
           <i class="el-icon-time"/>
           <span>{{ '   ' + scope.row.start_time }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="操作" min-width="30%">
+      <el-table-column align="center" label="操作" min-width="29%">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -88,8 +88,10 @@ export default {
     },
     statusFilter2(status) {
       const statusMap = {
-        running: 'el-icon-success',
-        stopped: 'el-icon-error'
+        running: 'el-icon-loading',
+        stopped: 'el-icon-error',
+        success: 'el-icon-success',
+        error: 'el-icon-warning'
       }
       return statusMap[status]
     }
@@ -105,7 +107,7 @@ export default {
   },
   created() {
     this.fetchData()
-    let that=this
+    let that = this
     this.$root.$on('refresh_apptable', function() {
       that.fetchData()
     })//监听外部刷新表格 socketio用 注意监听直接this 只能监听这个组件的emit 所以要挂root上
@@ -140,7 +142,11 @@ export default {
 
 <style lang="scss" scoped>
 .status-tags {
+  width: 6vw;
   font-size: 14.5px;
+}
+
+.status-tags .el-tag {
 }
 
 .editor-slide-upload {
@@ -151,8 +157,8 @@ export default {
   ::v-deep .el-upload-dragger {
     width: 100% !important;
   }
-}
 
+}
 
 
 </style>

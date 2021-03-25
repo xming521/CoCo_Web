@@ -8,7 +8,7 @@
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
+          <img src="@/assets/avatar.png" class="user-avatar">
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
@@ -61,6 +61,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.el-tag{
+  font-size: 15px;
+}
 .current-name{
   line-height: 50px;
   margin-left: 250px;
@@ -125,8 +128,8 @@ export default {
 
         .user-avatar {
           cursor: pointer;
-          width: 40px;
-          height: 40px;
+          width: 45px;
+          height: 45px;
           border-radius: 10px;
         }
 

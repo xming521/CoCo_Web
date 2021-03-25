@@ -1,12 +1,12 @@
 <template>
   <div id="app" class="wrap">
-    <el-row>
+    <el-row v-if="log_display_id==='output-small'">
       <el-col :span="14">
         <div class="content">
           <div id="input" class="input-card">
             <div class="input_title">
-                <input type="button" value="源代码"/>
-<!--                <div id="app-entrance">应用入口:/{{form.app_name}}/main.py</div>-->
+              <input type="button" value="源代码"/>
+              <!--                <div id="app-entrance">应用入口:/{{form.app_name}}/main.py</div>-->
 
               <el-button id="run" type="primary" @click="submit_code">运行</el-button>
             </div>
@@ -21,7 +21,6 @@
               </div>
             </div>
           </div>
-
         </div>
       </el-col>
       <el-col :span="10">
@@ -34,10 +33,10 @@
             <el-form-item label="运行镜像">
               <el-select v-model="form.image_name" placeholder="请选择">
                 <el-option
-                  v-for="item in envi_options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
+                  v-for="item in images_list"
+                  :key="item"
+                  :label="item"
+                  :value="item"
                   :disabled="item.disabled"
                 />
               </el-select>
@@ -114,9 +113,11 @@
       </el-col>
     </el-row>
     <el-row>
-      <div id="output" class="input-card">
+      <div :id="log_display_id" class="input-card">
         <div class="input_title">
           <input type="button" value="运行结果"/>
+          <el-button type="primary" icon="el-icon-arrow-up" @click="log_display"></el-button>
+
         </div>
         <div id="result" class="out_area">{{ response_info }}</div>
       </div>
@@ -150,6 +151,7 @@ import 'codemirror/addon/lint/lint.js'
 // socket
 import { app_submit, getApp_info } from '@/api/application'
 import { notice } from '@/utils/notice'
+import { getName } from '@/api/image'
 
 const setting = require('@/settings')
 export default {
@@ -157,12 +159,13 @@ export default {
   components: { codemirror },
   props: {},
   data() {
-    const code = setting.test_code
+    const code = setting.tens_code
     return {
       code,
       response_info: '',
       envi_value: '',
       disable_appname: false,
+      log_display_id: 'output-small',
       form: {
         app_name: '',
         image_name: '',
@@ -183,16 +186,8 @@ export default {
         75: '75%',
         100: '100%'
       },
-      envi_options: [
-        {
-          value: 'tensorflow-flask',
-          label: 'tensorflow-flask'
-        },
-        {
-          value: 'pytorch',
-          label: 'pytorch',
-          disabled: true
-        }
+      images_list: [
+        'tensorflow-flask'
       ],
       cmOption: {
         autoCloseBrackets: true,
@@ -211,7 +206,10 @@ export default {
   },
   created: function() {
     //todo 判断url 是否调用appinfo
-    if (this.$route.query.run_type == 'modified') {
+    getName().then((response) => {
+      this.images_list = response.data.res
+    })
+    if (this.$route.query.run_type === 'modified') {
       this.info_init(this.$route.query.app_name)
     }
     this.socketIO.on('print_log', (msg) => {
@@ -246,6 +244,14 @@ export default {
     },
     onCmCodeChange(newCode) {
       this.code = newCode
+    },
+    log_display() {
+      if (this.log_display_id === 'output-small') {
+        this.log_display_id = 'output-big'
+
+      } else {
+        this.log_display_id = 'output-small'
+      }
     },
     submit_code: function() {
       this.response_info = ''
@@ -327,10 +333,19 @@ input[type="button"],
   margin-bottom: 2.5vh;
 }
 
-#output {
+#output-small {
   margin-top: 5vh;
   height: 30vh;
   border-radius: 8px;
+  overflow-y: scroll;
+}
+
+#output-big {
+  margin-top: 5vh;
+  height: 80vh;
+  border-radius: 8px;
+  z-index: 9999;
+  overflow-y: scroll;
 }
 
 .out_area {
@@ -339,7 +354,7 @@ input[type="button"],
   overflow-y: scroll;
   display: block;
   width: 99.5%;
-  height: 23vh;
+  /*height: 23vh;*/
 }
 
 #app-info {

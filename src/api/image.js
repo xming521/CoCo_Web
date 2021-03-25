@@ -16,6 +16,14 @@ export function getList(params) {
   })
 }
 
+export function getName(params) {
+  return request({
+    url: '/image/getname',
+    method: 'get',
+    params
+  })
+}
+
 export function delete_images(params) {
   return request({
     url: '/image/delete',

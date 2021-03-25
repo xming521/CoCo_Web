@@ -49,7 +49,7 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: '看板', icon: 'dashboard' }
+      meta: { title: '看板', icon: 'el-icon-monitor' }
     }]
   },
   {
@@ -57,13 +57,13 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/app/app_table',
     name: 'app',
-    meta: { title: '应用', icon: 'el-icon-s-help' },
+    meta: { title: '应用', icon: 'el-icon-menu' },
     children: [
       {
         path: 'app_main',
         name: 'app_main',
         component: () => import('@/views/app/app_main'),
-        meta: { title: '创建应用', icon: 'dashboard' }
+        meta: { title: '创建应用', icon: 'el-icon-circle-plus-outline' }
       },
       {
         path: 'app_modify',
@@ -98,7 +98,8 @@ export const constantRoutes = [
         name: 'RolePermission',
         meta: {
           title: '权限控制',
-          roles: ['admin']
+          roles: ['admin'],
+          icon: 'el-icon-s-custom'
         }
       }
     ]
@@ -107,19 +108,19 @@ export const constantRoutes = [
   {
     path: '/image',
     component: Layout,
-    meta: { title: '镜像', icon: 'el-icon-s-help' },
+    meta: { title: '镜像', icon: 'el-icon-s-grid' },
     children: [
       {
         path: 'image/create',
         name: 'image',
         component: () => import('@/views/image/index'),
-        meta: { title: '推荐镜像', icon: 'form' }
+        meta: { title: '推荐镜像', icon: 'el-icon-s-grid' }
       },
        {
         path: 'image/table',
         name: 'image/table',
         component: () => import('@/views/image/table'),
-        meta: { title: '镜像管理', icon: 'form' }
+        meta: { title: '镜像管理', icon: 'el-icon-s-grid' }
       },
     ]
   },
@@ -131,7 +132,7 @@ export const constantRoutes = [
         path: 'file',
         name: 'Form',
         component: () => import('@/views/file/index'),
-        meta: { title: '文件和数据管理', icon: 'folder' }
+        meta: { title: '文件和数据管理', icon: 'el-icon-coin' }
       }
     ]
   },
@@ -143,75 +144,17 @@ export const constantRoutes = [
         path: 'scheduler',
         name: 'scheduler',
         component: () => import('@/views/scheduler/index'),
-        meta: { title: '计划任务', icon: 'file' }
+        meta: { title: '计划任务', icon: 'el-icon-s-operation' }
       }
     ]
   },
   {
-    path: '/nested',
-    component: Layout,
-    redirect: '/nested/menu1',
-    name: 'Nested',
-    meta: {
-      title: 'Nested',
-      icon: 'nested'
-    },
-    children: [
-      {
-        path: 'menu1',
-        component: () => import('@/views/nested/menu1/index'), // Parent router-view
-        name: 'Menu1',
-        meta: { title: 'Menu1' },
-        children: [
-          {
-            path: 'menu1-1',
-            component: () => import('@/views/nested/menu1/menu1-1'),
-            name: 'Menu1-1',
-            meta: { title: 'Menu1-1' }
-          },
-          {
-            path: 'menu1-2',
-            component: () => import('@/views/nested/menu1/menu1-2'),
-            name: 'Menu1-2',
-            meta: { title: 'Menu1-2' },
-            children: [
-              {
-                path: 'menu1-2-1',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-                name: 'Menu1-2-1',
-                meta: { title: 'Menu1-2-1' }
-              },
-              {
-                path: 'menu1-2-2',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-                name: 'Menu1-2-2',
-                meta: { title: 'Menu1-2-2' }
-              }
-            ]
-          },
-          {
-            path: 'menu1-3',
-            component: () => import('@/views/nested/menu1/menu1-3'),
-            name: 'Menu1-3',
-            meta: { title: 'Menu1-3' }
-          }
-        ]
-      },
-      {
-        path: 'menu2',
-        component: () => import('@/views/nested/menu2/index'),
-        name: 'Menu2',
-        meta: { title: 'menu2' }
-      }
-    ]
-  },
-  {
-    path: 'external-link',
+    path: 'Demo-Link',
     component: Layout,
     children: [
       {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: 'External Link', icon: 'link' }
+        path: 'http://47.94.199.65:5000/',
+        meta: { title: 'demo-link', icon: 'link' }
       }
     ]
   },
