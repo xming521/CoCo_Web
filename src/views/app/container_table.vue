@@ -65,6 +65,7 @@
       :with-header="false"
       :visible.sync="drawer"
       :direction="direction"
+      size="60%"
     >
 
       <el-row>
