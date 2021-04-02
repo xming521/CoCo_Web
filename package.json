@@ -17,6 +17,7 @@
   "dependencies": {
     "axios": "0.18.1",
     "core-js": "3.6.5",
+    "echarts": "^5.0.2",
     "element-ui": "2.13.2",
     "js-cookie": "2.2.0",
     "js-md5": "^0.7.3",
@@ -26,10 +27,11 @@
     "socket.io": "^3.0.5",
     "socket.io-client": "^3.0.5",
     "vue": "2.6.10",
-    "echarts": "^5.0.2",
     "vue-codemirror": "^4.0.6",
     "vue-router": "3.0.6",
-    "vuex": "3.1.0"
+    "vuex": "3.1.0",
+    "lodash": "4.17.15",
+    "vuedraggable": "2.23.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "4.4.4",

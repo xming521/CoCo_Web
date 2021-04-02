@@ -31,6 +31,13 @@ export function getApp_stop(params) {
     params
   })
 }
+export function getApp_delete(params) {
+  return request({
+    url: '/app_delete',
+    method: 'get',
+    params
+  })
+}
 
 export function getContainerr_list(params) {
   return request({

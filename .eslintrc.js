@@ -103,10 +103,10 @@ module.exports = {
       'allowLoop': false,
       'allowSwitch': false
     }],
-    'no-lone-blocks': 2,
-    'no-mixed-spaces-and-tabs': 2,
-    'no-multi-spaces': 2,
-    'no-multi-str': 2,
+    // 'no-lone-blocks': 2,
+    // 'no-mixed-spaces-and-tabs': 2,
+    // 'no-multi-spaces': 2,
+    // 'no-multi-str': 2,
     'no-multiple-empty-lines': [2, {
       'max': 1
     }],
@@ -152,16 +152,16 @@ module.exports = {
     'no-useless-escape': 0,
     'no-whitespace-before-property': 2,
     'no-with': 2,
-    'one-var': [2, {
-      'initialized': 'never'
-    }],
+    // 'one-var': [2, {
+    //   'initialized': 'never'
+    // }],
     'operator-linebreak': [2, 'after', {
       'overrides': {
         '?': 'before',
         ':': 'before'
       }
     }],
-    'padded-blocks': [2, 'never'],
+    // 'padded-blocks': [2, 'never'],
     'quotes': [2, 'single', {
       'avoidEscape': true,
       'allowTemplateLiterals': true

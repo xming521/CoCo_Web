@@ -136,6 +136,18 @@ export const constantRoutes = [
       }
     ]
   },
+    {
+    path: '/flow',
+    component: Layout,
+    children: [
+      {
+        path: 'flow',
+        name: 'Flow',
+        component: () => import('@/views/flow/index'),
+        meta: { title: 'Flow', icon: 'el-icon-coin' }
+      }
+    ]
+  },
   {
     path: '/scheduler',
     component: Layout,

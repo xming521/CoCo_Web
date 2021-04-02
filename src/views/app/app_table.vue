@@ -48,22 +48,27 @@
       <el-table-column align="center" label="操作" min-width="29%">
         <template slot-scope="scope">
           <el-button
-            size="mini"
+            size="small"
             type="success"
-            @click="handleEdit(scope.$index, scope.row)"
+            @click="app_start(scope.$index, scope.row)"
             v-bind:disabled="scope.row.status == 'running' ? true : false"
           >启动
           </el-button
           >
           <el-button
-            size="mini"
+            size="small"
             type="danger"
-            @click="handleDelete(scope.$index, scope.row)"
+            @click="app_stop(scope.$index, scope.row)"
             v-bind:disabled="['stopped','success','error'].includes(scope.row.status)"
           >停止
           </el-button
           >
-          <router-link :to="{name: 'container_table', query: {app_name:scope.row.app_name }}">
+
+          <el-button size="small" type="danger" icon="el-icon-delete" @click="app_delete(scope.$index, scope.row)">删除
+          </el-button>
+
+
+          <router-link style="margin-left: 1vw" :to="{name: 'container_table', query: {app_name:scope.row.app_name }}">
             <el-link type="primary">运行记录</el-link>
           </router-link>
         </template>
@@ -73,7 +78,7 @@
 </template>
 
 <script>
-import { getApp_start, getApp_stop, getList } from '@/api/application'
+import { getApp_start, getApp_stop, getList, getApp_delete } from '@/api/application'
 
 export default {
   filters: {
@@ -106,35 +111,50 @@ export default {
     }
   },
   created() {
-    this.fetchData()
+    this.fetch_apptable()
     let that = this
     this.$root.$on('refresh_apptable', function() {
       that.fetchData()
     })//监听外部刷新表格 socketio用 注意监听直接this 只能监听这个组件的emit 所以要挂root上
   },
   methods: {
-    fetchData() {
+    fetch_apptable() {
       this.listLoading = true
       getList().then((response) => {
         this.list = response.data.items
         this.listLoading = false
       })
     },
-    fetchData2(app_name) {
-      getApp_start({ app_name: app_name }).then((response) => {
-        this.fetchData()
+    app_start(index, row) {
+      getApp_start({ app_name: row.app_name }).then((response) => {
+        this.fetch_apptable()
       })
     },
-    fetchData3(app_name) {
-      getApp_stop({ app_name: app_name }).then((response) => {
-        this.fetchData()
+    app_stop(index, row) {
+      getApp_stop({ app_name: row.app_name }).then((response) => {
+        this.fetch_apptable()
       })
     },
-    handleEdit(index, row) {
-      this.fetchData2(row.app_name)
-    },
-    handleDelete(index, row) {
-      this.fetchData3(row.app_name)
+    app_delete(index, row) {
+      this.$confirm('此操作将永久删除该应用, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+        center: true
+      }).then(() => {
+        getApp_delete({ app_name: row.app_name }).then((response) => {
+          this.fetch_apptable()
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          })
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
     }
   }
 }

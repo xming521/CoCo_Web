@@ -159,7 +159,7 @@ export default {
   components: { codemirror },
   props: {},
   data() {
-    const code = setting.tens_code
+    const code = setting.test_code
     return {
       code,
       response_info: '',
@@ -213,13 +213,15 @@ export default {
       this.info_init(this.$route.query.app_name)
     }
     this.socketIO.on('print_log', (msg) => {
-      var objDiv = document.getElementById('result')
-      objDiv.scrollTop = 88888888
-      console.log('msg', msg)
-      // document.getElementById('result').scrollIntoView();
-      this.response_info = this.response_info + msg.data
-      objDiv.scrollTop = 88888888
-      // objDiv.scrollTop = objDiv.scrollHeight;
+      if (msg.app_name === this.form.app_name) {
+        var objDiv = document.getElementById('result')
+        objDiv.scrollTop = 88888888
+        console.log('msg', msg)
+        // document.getElementById('result').scrollIntoView();
+        this.response_info = this.response_info + msg.data
+        objDiv.scrollTop = 88888888
+        // objDiv.scrollTop = objDiv.scrollHeight;
+      }
     })
   },
   updated() {
