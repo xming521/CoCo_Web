@@ -1,41 +1,6 @@
 <template>
-  <div v-if="easyFlowVisible" style="height: calc(100vh);">
-    <el-row>
-      顶部工具菜单
-      <el-col :span="24">
-        <div class="ef-tooltar">
-          <el-link type="primary" :underline="false">{{ data.name }}</el-link>
-          <el-divider direction="vertical"></el-divider>
-          <el-button type="text" icon="el-icon-delete" size="large" @click="deleteElement"
-                     :disabled="!this.activeElement.type"
-          ></el-button>
-          <el-divider direction="vertical"></el-divider>
-          <el-button type="text" icon="el-icon-download" size="large" @click="downloadData"></el-button>
-          <el-divider direction="vertical"></el-divider>
-          <el-button type="text" icon="el-icon-plus" size="large" @click="zoomAdd"></el-button>
-          <el-divider direction="vertical"></el-divider>
-          <el-button type="text" icon="el-icon-minus" size="large" @click="zoomSub"></el-button>
-          <div style="float: right;margin-right: 5px">
-            <el-button type="info" plain round icon="el-icon-document" @click="dataInfo" size="mini">流程信息</el-button>
-            <el-button type="primary" plain round @click="dataReloadA" icon="el-icon-refresh" size="mini">切换流程A
-            </el-button>
-            <el-button type="primary" plain round @click="dataReloadB" icon="el-icon-refresh" size="mini">切换流程B
-            </el-button>
-            <el-button type="primary" plain round @click="dataReloadC" icon="el-icon-refresh" size="mini">切换流程C
-            </el-button>
-            <el-button type="primary" plain round @click="dataReloadD" icon="el-icon-refresh" size="mini">自定义样式
-            </el-button>
-            <el-button type="primary" plain round @click="dataReloadE" icon="el-icon-refresh" size="mini">力导图
-            </el-button>
-            <el-button type="info" plain round icon="el-icon-document" @click="openHelp" size="mini">帮助</el-button>
-          </div>
-        </div>
-      </el-col>
-    </el-row>
-    <div style="display: flex;height: calc(100% - 47px);">
-      <div style="width: 230px;border-right: 1px solid #dce3e8;">
-        <node-menu @addNode="addNode" ref="nodeMenu"></node-menu>
-      </div>
+  <div v-if="easyFlowVisible" style="">
+    <el-row style="display: flex;height: 80vh">
       <div id="efContainer" ref="efContainer" class="container" v-flowDrag>
         <template v-for="node in data.nodeList">
           <flow-node
@@ -52,15 +17,14 @@
         <!-- 给画布一个默认的宽度和高度 -->
         <div style="position:absolute;top: 2000px;left: 2000px;">&nbsp;</div>
       </div>
-      <!-- 右侧表单 -->
-<!--      <div style="width: 300px;border-left: 1px solid #dce3e8;background-color: #FBFBFB">-->
-<!--        <flow-node-form ref="nodeForm" @setLineLabel="setLineLabel" @repaintEverything="repaintEverything"-->
-<!--        ></flow-node-form>-->
-<!--      </div>-->
-    </div>
-    <!-- 流程数据详情 -->
-    <flow-info v-if="flowInfoVisible" ref="flowInfo" :data="data"></flow-info>
-    <flow-help v-if="flowHelpVisible" ref="flowHelp"></flow-help>
+    </el-row>
+    <el-row>
+      <div>
+        <node-menu @addNode="addNode" ref="nodeMenu"></node-menu>
+      </div>
+    </el-row>
+
+
   </div>
 
 </template>
@@ -78,11 +42,13 @@ import FlowHelp from './help'
 import FlowNodeForm from './node_form'
 import lodash from 'lodash'
 import { getDataA } from './data_A'
-import { getDataB } from './data_B'
+import { getDataB } from './flow_chart_data'
 import { getDataC } from './data_C'
 import { getDataD } from './data_D'
 import { getDataE } from './data_E'
 import { ForceDirected } from './force-directed'
+
+const { jsPlumb } = require('@/views/flow/components/jsplumb')
 
 export default {
   data() {
@@ -98,6 +64,7 @@ export default {
       flowHelpVisible: false,
       // 数据
       data: {},
+      last_app_name: '',
       // 激活的元素、可能是节点、可能是连线
       activeElement: {
         // 可选值 node 、line
@@ -317,41 +284,25 @@ export default {
      * 拖拽结束后添加新的节点
      * @param evt
      * @param nodeMenu 被添加的节点对象
-     * @param mousePosition 鼠标拖拽结束的坐标
      */
-    addNode(nodeMenu, mousePosition) {
+    addNode(nodeMenu, count) {
       // var screenX = evt.originalEvent.clientX, screenY = evt.originalEvent.clientY
       let efContainer = this.$refs.efContainer
       var containerRect = efContainer.getBoundingClientRect()
-      var left = 803, top = 400
+      var left = 200, top = 400
       // 计算是否拖入到容器中
       left = left - containerRect.x + efContainer.scrollLeft
       top = top - containerRect.y + efContainer.scrollTop
       // 居中
-      left -= 85
-      top -= 16
-      var nodeId = this.getUUID()
+      left += 300 * count
+      top -= 200
+      var nodeId = nodeMenu.id
       // 动态生成名字
       var origName = nodeMenu.name
       var nodeName = origName
       var index = 1
-      while (index < 10000) {
-        var repeat = false
-        for (var i = 0; i < this.data.nodeList.length; i++) {
-          let node = this.data.nodeList[i]
-          if (node.name === nodeName) {
-            nodeName = origName + index
-            repeat = true
-          }
-        }
-        if (repeat) {
-          index++
-          continue
-        }
-        break
-      }
       var node = {
-        id: nodeId,
+        id: nodeMenu.id,
         name: nodeName,
         type: nodeMenu.type,
         left: left + 'px',
@@ -374,6 +325,17 @@ export default {
           }
         })
       })
+      if (count !== 1) {
+        this.data.lineList.push({ from: this.last_app_name, to: nodeMenu.name })
+        // this.dataReload(this.data)
+        this.jsPlumb = jsPlumb.getInstance()
+        this.$nextTick(() => {
+          this.jsPlumbInit()
+        })
+      }
+      this.last_app_name = nodeMenu.name
+      console.log(JSON.stringify(this.data, null, 4).toString())
+
     },
     /**
      * 删除节点
@@ -471,23 +433,6 @@ export default {
     // 模拟载入数据dataD
     dataReloadD() {
       this.dataReload(getDataD())
-    },
-    // 模拟加载数据dataE，自适应创建坐标
-    zoomAdd() {
-      if (this.zoom >= 1) {
-        return
-      }
-      this.zoom = this.zoom + 0.1
-      this.$refs.efContainer.style.transform = `scale(${this.zoom})`
-      this.jsPlumb.setZoom(this.zoom)
-    },
-    zoomSub() {
-      if (this.zoom <= 0) {
-        return
-      }
-      this.zoom = this.zoom - 0.1
-      this.$refs.efContainer.style.transform = `scale(${this.zoom})`
-      this.jsPlumb.setZoom(this.zoom)
     }
   }
 }

@@ -114,7 +114,7 @@ export default {
     this.fetch_apptable()
     let that = this
     this.$root.$on('refresh_apptable', function() {
-      that.fetchData()
+      that.fetch_apptable()
     })//监听外部刷新表格 socketio用 注意监听直接this 只能监听这个组件的emit 所以要挂root上
   },
   methods: {

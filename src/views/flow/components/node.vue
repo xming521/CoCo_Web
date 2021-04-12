@@ -18,9 +18,9 @@
     </div>
     <!-- 节点状态图标 -->
     <div class="ef-node-right-ico">
-      <i class="el-icon-circle-check el-node-state-success" v-show="node.state === 'success'"></i>
-      <i class="el-icon-circle-close el-node-state-error" v-show="node.state === 'error'"></i>
-      <i class="el-icon-warning-outline el-node-state-warning" v-show="node.state === 'warning'"></i>
+      <i class="el-icon-success el-node-state-success" v-show="node.state === 'success'"></i>
+      <i class="el-icon-error el-node-state-error" v-show="node.state === 'error'"></i>
+      <i class="el-icon-warning el-node-state-warning" v-show="node.state === 'warning'"></i>
       <i class="el-icon-loading el-node-state-running" v-show="node.state === 'running'"></i>
     </div>
   </div>
@@ -77,3 +77,4 @@ export default {
   }
 }
 </script>
+

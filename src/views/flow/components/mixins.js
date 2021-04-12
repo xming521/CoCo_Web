@@ -7,9 +7,9 @@ export const easyFlowMixin = {
         // 容器ID
         Container: 'efContainer',
         // 连线的样式，直线或者曲线等，可选值:  StateMachine、Flowchart，Bezier、Straight
-        Connector: ['Bezier', { curviness: 100 }],
-        // Connector: ['Straight', {stub: 20, gap: 1}],
-        // Connector: ['Flowchart', {stub: 30, gap: 1, alwaysRespectStubs: false, midpoint: 0.5, cornerRadius: 10}],
+        // Connector: ['Bezier', { curviness: 100 }],
+        // Connector: ['Straight', { stub: 20, gap: 1 }],
+        Connector: ['Flowchart', { stub: 30, gap: 1, alwaysRespectStubs: false, midpoint: 0.5, cornerRadius: 10 }],
         // Connector: ['StateMachine', {margin: 5, curviness: 10, proximityLimit: 80}],
         // 鼠标不能拖动删除线
         ConnectionsDetachable: false,
@@ -48,9 +48,9 @@ export const easyFlowMixin = {
          */
         PaintStyle: {
           // 线的颜色
-          stroke: '#E0E3E7',
+          stroke: '#9c9c9c',
           // 线的粗细，值越大线越粗
-          strokeWidth: 1,
+          strokeWidth: 3,
           // 设置外边线的颜色，默认设置透明，这样别人就看不见了，点击线的时候可以不用精确点击，参考 https://blog.csdn.net/roymno2/article/details/72717101
           outlineStroke: 'transparent',
           // 线外边的宽，值越大，线的点击范围越大
@@ -63,11 +63,11 @@ export const easyFlowMixin = {
         Overlays: [
           // 箭头叠加
           ['Arrow', {
-            width: 10, // 箭头尾部的宽度
-            length: 8, // 从箭头的尾部到头部的距离
+            width: 13, // 箭头尾部的宽度
+            length: 12, // 从箭头的尾部到头部的距离
             location: 1, // 位置，建议使用0～1之间
             direction: 1, // 方向，默认值为1（表示向前），可选-1（表示向后）
-            foldback: 0.623 // 折回，也就是尾翼的角度，默认0.623，当为1时，为正三角
+            foldback: 1 // 折回，也就是尾翼的角度，默认0.623，当为1时，为正三角
           }],
           // ['Diamond', {
           //     events: {

@@ -1,23 +1,33 @@
 <template>
-  <div class="flow-menu" ref="tool">
+  <div class="flow-menu" ref="tool" style="border-top: 2px solid #dcdfe6;padding-top: 4vh">
+    <el-form>
+      <el-row>
+        <el-col :span="16">
+          <el-form-item label="选择应用" style="margin-left: 10vw;">
+            <el-select v-model="cur_app_name" placeholder="请选择">
+              <el-option
+                v-for="item in app_list"
+                :key="item"
+                :label="item"
+                :value="item"
+                :disabled="item.disabled"
+              />
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="8">
+          <el-button @click="add_node" type="primary">添加至调用链</el-button>
+        </el-col>
+      </el-row>
 
-    <el-button @click="add_node" type="primary">主要按钮</el-button>
-    <div v-for="menu  in  menuList" :key="menu.id">
-      <span class="ef-node-pmenu" @click="menu.open = !menu.open"><i
-        :class="{'el-icon-caret-bottom': menu.open,'el-icon-caret-right': !menu.open}"
-      ></i>&nbsp;{{ menu.name }}</span>
-      <ul v-show="menu.open" class="ef-node-menu-ul">
-        <draggable @end="end" @start="move" v-model="menu.children" :options="draggableOptions">
-          <li v-for="subMenu in menu.children" class="ef-node-menu-li" :key="subMenu.id" :type="subMenu.type">
-            <i :class="subMenu.ico"></i> {{ subMenu.name }}
-          </li>
-        </draggable>
-      </ul>
-    </div>
+    </el-form>
+
   </div>
 </template>
 <script>
 import draggable from 'vuedraggable'
+
+const { getAppName } = require('@/api/role')
 
 var mousePosition = {
   left: -1,
@@ -28,11 +38,14 @@ export default {
   data() {
     return {
       activeNames: '1',
+      app_list: [],
+      app_count: 0,
+      cur_app_name: '',
       node_info: {
         id: '11',
         type: 'timer',
         name: '应用',
-        ico: 'el-icon-time',
+        ico: 'el-icon-menu',
         // 自定义覆盖样式
         style: {}
       },
@@ -106,12 +119,17 @@ export default {
     draggable
   },
   created() {
+    getAppName().then((response) => {
+      this.app_list = response.data.res
+    })
   },
   methods: {
     //todo
     add_node() {
-      this.nodeMenu = this.node_info
-      this.$emit('addNode', this.nodeMenu, mousePosition)
+      this.node_info.name = this.cur_app_name
+      this.node_info.id = this.cur_app_name
+      this.app_count++
+      this.$emit('addNode', this.node_info, this.app_count)
     },
     // 拖拽开始时触发
     move(evt, a, b, c) {

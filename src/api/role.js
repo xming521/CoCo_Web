@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-export function getRoutes() {
+export function getAppName() {
   return request({
     url: '/app_getname',
     method: 'get'
