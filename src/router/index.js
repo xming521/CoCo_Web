@@ -68,7 +68,7 @@ export const constantRoutes = [
       {
         path: 'app_modify',
         name: 'app_modify',
-        hidden:true,
+        hidden: true,
         component: () => import('@/views/app/app_main'),
         meta: { title: '编辑应用', icon: 'dashboard' }
       },
@@ -116,12 +116,12 @@ export const constantRoutes = [
         component: () => import('@/views/image/index'),
         meta: { title: '推荐镜像', icon: 'el-icon-s-grid' }
       },
-       {
+      {
         path: 'image/table',
         name: 'image/table',
         component: () => import('@/views/image/table'),
         meta: { title: '镜像管理', icon: 'el-icon-s-grid' }
-      },
+      }
     ]
   },
   {
@@ -136,7 +136,7 @@ export const constantRoutes = [
       }
     ]
   },
-    {
+  {
     path: '/flow',
     component: Layout,
     children: [
@@ -145,6 +145,17 @@ export const constantRoutes = [
         name: 'Flow',
         component: () => import('@/views/flow/index'),
         meta: { title: 'Flow', icon: 'el-icon-coin' }
+      }
+    ]
+  }, {
+    path: '/test',
+    component: Layout,
+    children: [
+      {
+        path: 'test',
+        name: 'test',
+        component: () => import('@/views/test/index'),
+        meta: { title: 'test', icon: 'el-icon-coin' }
       }
     ]
   },

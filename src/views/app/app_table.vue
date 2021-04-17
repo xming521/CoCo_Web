@@ -13,14 +13,14 @@
           {{ scope.$index }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="App名称" min-width="15%">
+      <el-table-column align="center" label="App名称" min-width="14%">
         <template slot-scope="scope">
           <router-link :to="{name: 'app_modify', query: {app_name:scope.row.app_name, run_type: 'modified' }}">
             <el-link type="primary">{{ scope.row.app_name }}</el-link>
           </router-link>
         </template>
       </el-table-column>
-      <el-table-column label="镜像" min-width="20%" align="center">
+      <el-table-column label="镜像" min-width="17%" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.image_name }}</span>
         </template>
@@ -45,7 +45,7 @@
           <span>{{ '   ' + scope.row.start_time }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="操作" min-width="29%">
+      <el-table-column align="center" label="操作" min-width="33%">
         <template slot-scope="scope">
           <el-button
             size="small"
@@ -63,22 +63,41 @@
           >停止
           </el-button
           >
-
           <el-button size="small" type="danger" icon="el-icon-delete" @click="app_delete(scope.$index, scope.row)">删除
           </el-button>
-
-
+          <el-button size="small" type="primary" icon="el-icon-odometer"
+                     @click="app_performance(scope.$index, scope.row)"
+          >性能监控
+          </el-button>
           <router-link style="margin-left: 1vw" :to="{name: 'container_table', query: {app_name:scope.row.app_name }}">
             <el-link type="primary">运行记录</el-link>
           </router-link>
+
         </template>
       </el-table-column>
     </el-table>
+
+    <el-drawer
+      title="性能监控"
+      :visible.sync="drawer"
+      direction="btt"
+      size="92%"
+      append-to-body="false"
+      custom-class="custom-drawer"
+      @opened="open_chart"
+      @close="close_chart"
+    >
+      <div id="chart-container" style="width: 70vw;height: 50vh;margin: 10vh 0 0 8vw"></div>
+    </el-drawer>
+
   </div>
 </template>
 
 <script>
 import { getApp_start, getApp_stop, getList, getApp_delete } from '@/api/application'
+import { Line } from '@antv/g2plot'
+
+const { getApp_performance } = require('@/api/application')
 
 export default {
   filters: {
@@ -104,6 +123,9 @@ export default {
   data() {
     return {
       list: null,
+      drawer: false,
+      chart_data: [],
+      chart: null,
       listLoading: true,
       disr: false,
       diss: false,
@@ -155,6 +177,44 @@ export default {
           message: '已取消删除'
         })
       })
+    },
+    app_performance(index, row) {
+      getApp_performance({ app_name: row.app_name }).then((response) => {
+        this.chart_data = response.data.res
+        this.drawer = true
+      })
+    },
+    open_chart() {
+      this.chart = new Line('chart-container', {
+        data: this.chart_data,
+        xField: 'time',
+        yField: 'value',
+        seriesField: 'type',
+        legend: {
+          title: {
+            text: '性能使用（百分比）',
+            spacing: 18,
+            style: {
+              fontSize: 18,
+              fontWeight: 700
+            }
+          }
+        },
+        smooth: true,
+        // @TODO 后续会换一种动画方式
+        animation: {
+          appear: {
+            animation: 'path-in',
+            duration: 5000
+          }
+        }
+
+      })
+      this.chart.render()
+    },
+    close_chart() {
+      this.chart_data = []
+      this.chart.destroy()
     }
   }
 }
@@ -180,5 +240,17 @@ export default {
 
 }
 
+::v-deep .el-drawer__container {
+  position: absolute;
+  width: 86.2vw;
+}
+
+::v-deep .el-drawer.btt, .el-drawer.ttb, .el-drawer__container {
+  left: 13.8vw;;
+}
+
+.custom-drawer {
+  width: 80%;
+}
 
 </style>

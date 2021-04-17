@@ -62,3 +62,11 @@ export function getApp_log(params) {
     params
   })
 }
+
+export function getApp_performance(params) {
+  return request({
+    url: '/app_getperformance',
+    method: 'get',
+    params
+  })
+}

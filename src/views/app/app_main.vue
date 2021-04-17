@@ -229,11 +229,7 @@ export default {
     objDiv.scrollTop = 88888888
   },
   mounted() {
-    // setTimeout(() => {
-    //   if (this.socketIO.connected) {
-    //     notice(this, '成功', '服务器连接成功', 'success')
-    //   }
-    // }, 500) //todo 可以改用watch
+
   },
   methods: {
     info_init(app_name) {
