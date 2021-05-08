@@ -111,7 +111,7 @@ export const constantRoutes = [
     meta: { title: '镜像', icon: 'el-icon-s-grid' },
     children: [
       {
-        path: 'image/create',
+        path: 'image',
         name: 'image',
         component: () => import('@/views/image/index'),
         meta: { title: '推荐镜像', icon: 'el-icon-s-grid' }
@@ -121,6 +121,12 @@ export const constantRoutes = [
         name: 'image/table',
         component: () => import('@/views/image/table'),
         meta: { title: '镜像管理', icon: 'el-icon-s-grid' }
+      },
+        {
+        path: 'image/create',
+        name: 'image/create',
+        component: () => import('@/views/image/create'),
+        meta: { title: '镜像制作', icon: 'el-icon-s-grid' }
       }
     ]
   },

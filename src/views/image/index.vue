@@ -21,13 +21,13 @@
         <el-card class="box-card2">
           <el-row>
             <el-col :span="16">
-              <el-row><h1>TensorFlow</h1></el-row>
+              <el-row><h1>pytorch</h1></el-row>
               <el-row><div class="text">TensorFlow 是一个端到端开源机器学习平台。它拥有一个全面而灵活的生态系统，其中包含各种工具、库和社区资源。</div> </el-row>
             </el-col>
             <el-col :span="8">
               <div class="grid-content bg-purple">
                 <div class="box2">
-                  <img src="../../assets/image_images/tensorflow.png">
+                  <img src="../../assets/image_images/pytorch.png">
                 </div>
               </div>
             </el-col>
@@ -38,13 +38,13 @@
         <el-card class="box-card2">
           <el-row>
             <el-col :span="16">
-              <el-row><h1>TensorFlow</h1></el-row>
+              <el-row><h1>ubuntu</h1></el-row>
               <el-row><div class="text">TensorFlow 是一个端到端开源机器学习平台。它拥有一个全面而灵活的生态系统，其中包含各种工具、库和社区资源。</div> </el-row>
             </el-col>
             <el-col :span="8">
               <div class="grid-content bg-purple">
                 <div class="box2">
-                  <img src="../../assets/image_images/tensorflow.png">
+                  <img src="../../assets/image_images/ubuntu.png">
                 </div>
               </div>
             </el-col>
@@ -55,13 +55,13 @@
         <el-card class="box-card2">
           <el-row>
             <el-col :span="16">
-              <el-row><h1>TensorFlow</h1></el-row>
+              <el-row><h1>centos</h1></el-row>
               <el-row><div class="text">TensorFlow 是一个端到端开源机器学习平台。它拥有一个全面而灵活的生态系统，其中包含各种工具、库和社区资源。</div> </el-row>
             </el-col>
             <el-col :span="8">
               <div class="grid-content bg-purple">
                 <div class="box2">
-                  <img src="../../assets/image_images/tensorflow.png">
+                  <img src="../../assets/image_images/centos-logo.png">
                 </div>
               </div>
             </el-col>
@@ -72,13 +72,13 @@
         <el-card class="box-card2">
           <el-row>
             <el-col :span="16">
-              <el-row><h1>TensorFlow</h1></el-row>
+              <el-row><h1>python</h1></el-row>
               <el-row><div class="text">TensorFlow 是一个端到端开源机器学习平台。它拥有一个全面而灵活的生态系统，其中包含各种工具、库和社区资源。</div> </el-row>
             </el-col>
             <el-col :span="8">
               <div class="grid-content bg-purple">
                 <div class="box2">
-                  <img src="../../assets/image_images/tensorflow.png">
+                  <img src="../../assets/image_images/python-logo.png">
                 </div>
               </div>
             </el-col>
@@ -89,13 +89,13 @@
         <el-card class="box-card2">
           <el-row>
             <el-col :span="16">
-              <el-row><h1>TensorFlow</h1></el-row>
+              <el-row><h1>java</h1></el-row>
               <el-row><div class="text">TensorFlow 是一个端到端开源机器学习平台。它拥有一个全面而灵活的生态系统，其中包含各种工具、库和社区资源。</div> </el-row>
             </el-col>
             <el-col :span="8">
               <div class="grid-content bg-purple">
                 <div class="box2">
-                  <img src="../../assets/image_images/tensorflow.png">
+                  <img src="../../assets/image_images/java.png">
                 </div>
               </div>
             </el-col>
@@ -106,13 +106,13 @@
         <el-card class="box-card2">
           <el-row>
             <el-col :span="16">
-              <el-row><h1>TensorFlow</h1></el-row>
+              <el-row><h1>go</h1></el-row>
               <el-row><div class="text">TensorFlow 是一个端到端开源机器学习平台。它拥有一个全面而灵活的生态系统，其中包含各种工具、库和社区资源。</div> </el-row>
             </el-col>
             <el-col :span="8">
               <div class="grid-content bg-purple">
                 <div class="box2">
-                  <img src="../../assets/image_images/tensorflow.png">
+                  <img src="../../assets/image_images/go.png">
                 </div>
               </div>
             </el-col>
@@ -123,13 +123,13 @@
         <el-card class="box-card2">
           <el-row>
             <el-col :span="16">
-              <el-row><h1>TensorFlow</h1></el-row>
+              <el-row><h1>node.js</h1></el-row>
               <el-row><div class="text">TensorFlow 是一个端到端开源机器学习平台。它拥有一个全面而灵活的生态系统，其中包含各种工具、库和社区资源。</div> </el-row>
             </el-col>
             <el-col :span="8">
               <div class="grid-content bg-purple">
                 <div class="box2">
-                  <img src="../../assets/image_images/tensorflow.png">
+                  <img src="../../assets/image_images/nodejs.png">
                 </div>
               </div>
             </el-col>
@@ -140,13 +140,30 @@
         <el-card class="box-card2">
           <el-row>
             <el-col :span="16">
-              <el-row><h1>TensorFlow</h1></el-row>
+              <el-row><h1>spring-boot</h1></el-row>
               <el-row><div class="text">TensorFlow 是一个端到端开源机器学习平台。它拥有一个全面而灵活的生态系统，其中包含各种工具、库和社区资源。</div> </el-row>
             </el-col>
             <el-col :span="8">
               <div class="grid-content bg-purple">
                 <div class="box2">
-                  <img src="../../assets/image_images/tensorflow.png">
+                  <img src="../../assets/image_images/spring-boot.png">
+                </div>
+              </div>
+            </el-col>
+          </el-row>
+        </el-card>
+    </el-col>
+    <el-col :span="12">
+        <el-card class="box-card2">
+          <el-row>
+            <el-col :span="16">
+              <el-row><h1>jenkins</h1></el-row>
+              <el-row><div class="text">TensorFlow 是一个端到端开源机器学习平台。它拥有一个全面而灵活的生态系统，其中包含各种工具、库和社区资源。</div> </el-row>
+            </el-col>
+            <el-col :span="8">
+              <div class="grid-content bg-purple">
+                <div class="box2">
+                  <img src="../../assets/image_images/jenkins.png">
                 </div>
               </div>
             </el-col>
