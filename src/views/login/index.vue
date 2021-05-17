@@ -3,7 +3,7 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">计算资源管理平台</h3>
+        <h2 class="title">计算资源管理平台</h2>
       </div>
 
       <el-form-item prop="username">
@@ -44,7 +44,7 @@
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
 
       <div class="tips">
-        <span style="margin-right:20px;">username: admin</span>
+        <span style="margin-right:20px;">username: admin tester developer</span>
         <span> password: 123456</span>
       </div>
 
@@ -60,7 +60,7 @@ export default {
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
-        callback(new Error('Please enter the correct user name'))
+        callback(new Error('请输入正确的用户名和密码'))
       } else {
         callback()
       }
@@ -216,7 +216,8 @@ $light_gray:#eee;
     position: relative;
 
     .title {
-      font-size: 26px;
+      font-size: 2rem;
+      letter-spacing: 1.1vw;
       color: $light_gray;
       margin: 0px auto 40px auto;
       text-align: center;

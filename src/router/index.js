@@ -87,52 +87,44 @@ export const constantRoutes = [
       }
     ]
   },
-  {
-    path: '/permission',
-    component: Layout,
-    redirect: '/role',
-    children: [
-      {
-        path: 'role',
-        component: () => import('@/views/permission/role'),
-        name: 'RolePermission',
-        meta: {
-          title: '权限控制',
-          roles: ['admin'],
-          icon: 'el-icon-s-custom'
-        }
-      }
-    ]
-  },
 
-  {
-    path: '/image',
-    component: Layout,
-    meta: { title: '镜像', icon: 'el-icon-s-grid' },
-    children: [
-      {
-        path: 'image',
-        name: 'image',
-        component: () => import('@/views/image/index'),
-        meta: { title: '推荐镜像', icon: 'el-icon-s-grid' }
-      },
-      {
-        path: 'image/table',
-        name: 'image/table',
-        component: () => import('@/views/image/table'),
-        meta: { title: '镜像管理', icon: 'el-icon-s-grid' }
-      },
-        {
-        path: 'image/create',
-        name: 'image/create',
-        component: () => import('@/views/image/create'),
-        meta: { title: '镜像制作', icon: 'el-icon-s-grid' }
-      }
-    ]
-  },
+  // 404 page must be placed at the end !!!
+  { path: '*', redirect: '/404', hidden: true }
+]
+
+/**
+ * asyncRoutes
+ * the routes that need to be dynamically loaded based on user roles
+ */
+export const asyncRoutes = [{
+  path: '/image',
+  component: Layout,
+  meta: { title: '镜像', icon: 'el-icon-s-grid', roles: ['admin'] },
+  children: [
+    {
+      path: 'image/1',
+      name: 'image/1',
+      component: () => import('@/views/image/index'),
+      meta: { title: '推荐镜像', icon: 'el-icon-s-grid' }
+    },
+    {
+      path: 'image/table',
+      name: 'image/table',
+      component: () => import('@/views/image/table'),
+      meta: { title: '镜像管理', icon: 'el-icon-s-grid' }
+    },
+    {
+      path: 'image/create',
+      name: 'image/create',
+      component: () => import('@/views/image/create'),
+      meta: { title: '镜像制作', icon: 'el-icon-s-grid' }
+    }
+  ]
+},
   {
     path: '/file',
     component: Layout,
+    meta: { roles: ['admin', 'developer'] },
     children: [
       {
         path: 'file',
@@ -145,6 +137,7 @@ export const constantRoutes = [
   {
     path: '/flow',
     component: Layout,
+    meta: { roles: ['admin', 'developer'] },
     children: [
       {
         path: 'flow',
@@ -153,21 +146,11 @@ export const constantRoutes = [
         meta: { title: 'Flow', icon: 'el-icon-coin' }
       }
     ]
-  }, {
-    path: '/test',
-    component: Layout,
-    children: [
-      {
-        path: 'test',
-        name: 'test',
-        component: () => import('@/views/test/index'),
-        meta: { title: 'test', icon: 'el-icon-coin' }
-      }
-    ]
   },
   {
     path: '/scheduler',
     component: Layout,
+    meta: { roles: ['admin', 'developer'] },
     children: [
       {
         path: 'scheduler',
@@ -178,19 +161,55 @@ export const constantRoutes = [
     ]
   },
   {
-    path: 'Demo-Link',
+    path: '/permission',
     component: Layout,
+    redirect: '/role',
+    meta: { roles: ['admin'] },
     children: [
       {
-        path: 'http://47.94.199.65:5000/',
-        meta: { title: 'demo-link', icon: 'link' }
+        path: 'role',
+        component: () => import('@/views/permission/role'),
+        name: 'RolePermission',
+        meta: {
+          title: '权限控制',
+          roles: ['admin'],
+          icon: 'el-icon-s-custom'
+        }
+      }
+    ]
+  }, {
+    path: 'thiea',
+    component: Layout,
+    meta: { roles: ['admin', 'developer'] },
+    children: [
+      {
+        path: 'http://8.140.133.102:3000/#/home/project',
+        meta: { title: 'Thiea IDE', icon: 'link' }
       }
     ]
   },
-  // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
-]
-
+  {
+    path: 'leablstdio',
+    component: Layout,
+    meta: { roles: ['admin', 'developer'] },
+    children: [
+      {
+        path: 'http://8.140.133.102:8080/projects/',
+        meta: { title: 'Leabl Stdio', icon: 'link' }
+      }
+    ]
+  },
+  {
+    path: 'Demo-Link',
+    component: Layout,
+    meta: { roles: ['admin', 'tester', 'developer'] },
+    children: [
+      {
+        path: 'http://8.140.133.102:5000/',
+        meta: { title: 'demo-link', icon: 'link' }
+      }
+    ]
+  }]
 const createRouter = () => new Router({
   // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),

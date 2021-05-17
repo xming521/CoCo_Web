@@ -7,7 +7,10 @@
             <div class="input_title">
               <input type="button" value="源代码"/>
               <!--                <div id="app-entrance">应用入口:/{{form.app_name}}/main.py</div>-->
-
+              <el-tag style="zoom: 1.2;margin-left: 16vw;" class="status-tags" :type="status | statusFilter" effect="dark">
+                <i v-bind:class="status | statusFilter2"></i>
+                {{ status }}
+              </el-tag>
               <el-button id="run" type="primary" @click="submit_code">运行</el-button>
             </div>
             <div class="input_area">
@@ -158,11 +161,32 @@ export default {
   name: 'app_main',
   components: { codemirror },
   props: {},
+  filters: {
+    statusFilter(status) {
+      const statusMap = {
+        running: 'success',
+        stopped: 'info',
+        success: 'success',
+        error: 'danger'
+      }
+      return statusMap[status]
+    },
+    statusFilter2(status) {
+      const statusMap = {
+        running: 'el-icon-loading',
+        stopped: 'el-icon-error',
+        success: 'el-icon-success',
+        error: 'el-icon-warning'
+      }
+      return statusMap[status]
+    }
+  },
   data() {
     const code = setting.test_code
     return {
       code,
       response_info: '',
+      status: 'stopped',
       envi_value: '',
       disable_appname: false,
       log_display_id: 'output-small',
@@ -236,6 +260,7 @@ export default {
       getApp_info({ app_name: app_name }).then((response) => {
         this.disable_appname = true
         this.form = response.data.res
+        this.status = response.data.res.status
         this.form.run_type = 'modified'
         this.code = response.data.res.code
       })
@@ -265,7 +290,8 @@ export default {
         network: this.form.network
       })
         .then((response) => {
-          if (response.data.status == 1) {
+          if (response.data.status === 1) {
+            this.status='running';
             // notice(this, '成功', '运行成功', 'success')
           }
         })
