@@ -1,3 +1,4 @@
+// eslint-disable-next-line vue/max-attributes-per-line
 import axios from 'axios'
 import { MessageBox, Message } from 'element-ui'
 import store from '@/store'

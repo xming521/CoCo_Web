@@ -17,14 +17,14 @@
           </el-select>
         </el-form-item>
 
-        <el-form-item label="触发器类型">
+        <el-form-item label="触发器类型" label-width="160px">
           <div>
             <el-radio v-model="form.type" label="interval" border>定时触发</el-radio>
             <el-radio v-model="form.type" label="cron" border>cron表达式</el-radio>
           </div>
         </el-form-item>
 
-        <el-form-item label="触发间隔（每）" label-width="100px">
+        <el-form-item label="触发间隔（每）" label-width="190px">
           <el-form :inline="true">
             <el-input v-model="form.param.seconds" class="input-mini"></el-input>
             <el-form-item label="秒" label-width="15px"></el-form-item>
@@ -37,7 +37,7 @@
           </el-form>
 
         </el-form-item>
-        <el-form-item label="corn表达式">
+        <el-form-item label="corn表达式" label-width="165px">
           <el-input style="width: 400px" v-model="form.param.crontab_expression" placeholder=""></el-input>
         </el-form-item>
       </el-form>

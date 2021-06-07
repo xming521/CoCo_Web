@@ -8,24 +8,24 @@
       fit
       highlight-current-row
     >
-      <el-table-column align="center" label="ID" min-width="5%">
+      <el-table-column align="center" label="ID" min-width="3%">
         <template slot-scope="scope">
           {{ scope.$index }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="App名称" min-width="14%">
+      <el-table-column align="center" label="App名称" min-width="17%">
         <template slot-scope="scope">
           <router-link :to="{name: 'app_modify', query: {app_name:scope.row.app_name, run_type: 'modified' }}">
             <el-link type="primary">{{ scope.row.app_name }}</el-link>
           </router-link>
         </template>
       </el-table-column>
-      <el-table-column label="镜像" min-width="17%" align="center">
+      <el-table-column label="镜像" min-width="20%" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.image_name }}</span>
         </template>
       </el-table-column>
-      <el-table-column min-width="13%" label="状态"
+      <el-table-column min-width="12%" label="状态"
                        class-name="status-col"
                        align="center"
       >
@@ -36,7 +36,7 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column min-width="18%" label="上次运行时间"
+      <el-table-column min-width="15%" label="上次运行时间"
                        align="center"
                        prop="created_at"
       >
@@ -76,7 +76,13 @@
         </template>
       </el-table-column>
     </el-table>
-
+    <el-pagination
+      background
+      layout="prev, pager, next"
+      :total="1"
+      style="margin: 8vh 0 0 0vw"
+    >
+    </el-pagination>
     <el-drawer
       title="性能监控"
       :visible.sync="drawer"

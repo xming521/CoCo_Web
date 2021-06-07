@@ -102,20 +102,20 @@ export const asyncRoutes = [{
   meta: { title: '镜像', icon: 'el-icon-s-grid', roles: ['admin'] },
   children: [
     {
-      path: 'image/1',
-      name: 'image/1',
+      path: 'image_',
+      name: 'image_',
       component: () => import('@/views/image/index'),
       meta: { title: '推荐镜像', icon: 'el-icon-s-grid' }
     },
     {
       path: 'image/table',
-      name: 'image/table',
+      name: 'image_table',
       component: () => import('@/views/image/table'),
       meta: { title: '镜像管理', icon: 'el-icon-s-grid' }
     },
     {
       path: 'image/create',
-      name: 'image/create',
+      name: 'image_create',
       component: () => import('@/views/image/create'),
       meta: { title: '镜像制作', icon: 'el-icon-s-grid' }
     }

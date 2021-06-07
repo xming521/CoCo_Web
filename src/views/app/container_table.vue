@@ -8,22 +8,22 @@
       fit
       highlight-current-row
     >
-      <el-table-column align="center" label="ID" min-min-width="70">
+      <el-table-column align="center" label="ID" min-width="10%">
         <template slot-scope="scope">
           {{ scope.row.container_id }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="应用名称" min-width="100">
+      <el-table-column align="center" label="应用名称" min-width="20%">
         <template slot-scope="scope">
           {{ scope.row.app_name }}
         </template>
       </el-table-column>
-      <el-table-column label="镜像名称" min-width="100" align="center">
+      <el-table-column label="镜像名称" min-width="20%" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.image_name }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="上次运行时间" min-width="150"
+      <el-table-column label="上次运行时间" min-width="15%"
         align="center"
         prop="created_at"
 
@@ -33,7 +33,7 @@
           <span>{{ scope.row.start_time }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="结束时间" min-width="150"
+      <el-table-column label="结束时间" min-width="15%"
         align="center"
         prop="created_at"
 
@@ -43,12 +43,12 @@
           <span>{{ scope.row.over_time }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="状态" min-width="100">
+      <el-table-column align="center" label="状态" min-width="10%">
         <template slot-scope="scope">
           {{ scope.row.status |statusFilter }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="日志"  min-width="100">
+      <el-table-column align="center" label="日志"  min-width="10%">
         <template slot-scope="scope">
           <el-button
             size="mini"

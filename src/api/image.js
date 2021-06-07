@@ -31,3 +31,11 @@ export function delete_images(params) {
     params
   })
 }
+
+export function image_build(params) {
+  return request({
+    url: '/image/build',
+    method: 'get',
+    params
+  })
+}

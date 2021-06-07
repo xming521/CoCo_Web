@@ -28,12 +28,7 @@
           {{ scope.row.id }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="镜像名称" min-width="20%">
-        <template slot-scope="scope">
-          <el-link type="primary">{{ scope.row.name }}</el-link>
-        </template>
-      </el-table-column>
-      <el-table-column label="标签" min-width="15%" align="center">
+      <el-table-column label="镜像标签" min-width="35%" align="center">
         <template slot-scope="scope">
           {{ scope.row.tag }}
         </template>

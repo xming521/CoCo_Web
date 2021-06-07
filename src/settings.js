@@ -1,3 +1,4 @@
+// eslint-disable-next-line vue/max-attributes-per-line
 module.exports = {
   title: '计算资源管理平台',
   test_code: 'import time\n' +
@@ -24,10 +25,26 @@ module.exports = {
     '\n' +
     'model.fit(x_train, y_train, epochs=2)\n' +
     'model.evaluate(x_test, y_test)',
-  /**
-   * @type {boolean} true | false
-   * @description Whether fix the header
-   */
+
+  docker_filecode: 'FROM ubuntu:18.04\n' +
+    'ENV USER root\n' +
+    '\n' +
+    'RUN sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list\n' +
+    'RUN apt-get clean\n' +
+    'RUN apt-get update\n' +
+    'RUN apt-get install -y mysql-server-5.5\n' +
+    '\n' +
+    '\n' +
+    'COPY my.cnf /etc/mysql/my.cnf\n' +
+    'COPY start.sh start.sh\n' +
+    '\n' +
+    'VOLUME ["/var/lib/mysql"]\n' +
+    '\n' +
+    'RUN rm /usr/sbin/policy-rc.d\n' +
+    'CMD ["/start.sh"]\n' +
+    '\n' +
+    'EXPOSE 3306',
+
   fixedHeader: false,
 
   /**

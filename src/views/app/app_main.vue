@@ -73,7 +73,7 @@
             <el-row>
               <el-col :span="14">
                 <el-form-item label="自定义应用性能">
-                  <el-switch v-model="form.use_network"/>
+                  <el-switch v-model="form.control_performance"/>
                 </el-form-item>
               </el-col>
               <el-col :span="10">
@@ -198,6 +198,7 @@ export default {
         app_type: '',
         timeout: '',
         use_network: false,
+        control_performance:false,
         network: 'none',
         cpu_count: 1,
         cpu_percent: 100,
