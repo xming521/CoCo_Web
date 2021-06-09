@@ -52,7 +52,7 @@
             <el-col :span="16">
               <div class="grid-content bg-purple">
                 <h1>镜像</h1>
-                <router-link :to="{name: 'image/table'}">
+                <router-link :to="{name: 'image_table'}">
                   <el-link v-loading="loading" element-loading-background="transparent" class="card-link">
                     {{ info.image_count }}
                   </el-link>

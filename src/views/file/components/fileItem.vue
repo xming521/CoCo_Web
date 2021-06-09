@@ -52,8 +52,8 @@
     .file-item {
         position: relative;
         display: inline-block;
-        width: 120px;
-        height: 120px;
+        width: 150px;
+        height: 110px;
         overflow: hidden;
         padding: 10px 10px 0 10px;
         margin-right: 5px;
