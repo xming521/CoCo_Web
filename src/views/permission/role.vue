@@ -60,7 +60,7 @@
 import path from 'path'
 import { deepClone } from '@/utils'
 import { getAppName, getRoles, addRole, deleteRole, updateRole } from '@/api/role'
-
+import router from '@/router'
 const defaultRole = {
   key: '',
   name: '用户',
@@ -95,13 +95,12 @@ export default {
   },
   methods: {
     async getRoutes() {
-      const res = await getAppName()
-      // this.serviceRoutes = res.data
-      this.routes = res.data.res.map(i => {
+      const res = ['看板','应用创建','应用控制','镜像管理','文件管理','计划任务','Thiea IDE','Leabl Stdio']
+
+      this.routes = res.map(i => {
         return { label: i }
       })
-      // console.log(res.res)
-      // this.routes = this.generateRoutes(res.res)
+      console.log(this.routes)
     },
     async getRoles() {
       const res = await getRoles()
